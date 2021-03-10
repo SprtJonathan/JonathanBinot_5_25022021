@@ -12,9 +12,13 @@
       content="Orinoco est un site de e-commerce se démarquant des autres en créant des applications thématiques ne vendant qu’un seul groupe de produits."
     />
 
-    <link rel="icon" type="image/png" href="./images/logo/favicon_orinoco.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="./images/logo/favicon_orinoco.png"
+    />
 
-    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./public\css\style.css" />
 
     <!-- Bootstrap -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -62,13 +66,24 @@
             </button>
             <div id="navbarContent" class="collapse navbar-collapse">
               <ul class="navbar-nav">
-                <li class="nav-item active">
-                  <a class="nav-link ml-5" href="index.html">Accueil</a>
-                </li>
                 <li class="nav-item">
-                  <a class="nav-link ml-5" href="shopping-cart.html"
-                    >Mon Panier <i class="fas fa-shopping-basket"></i
-                  ></a>
+                  <a class="nav-link ml-5 shopping-cart-link" href="shopping-cart.html"
+                    >
+                    <div class="desktop-cart-text">Mon Panier</div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="32"
+                      height="32"
+                      fill="currentColor"
+                      class="bi bi-cart desktop-cart-image"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+                      />
+                    </svg>
+                    <div id="shopping-cart-number" class="cart-item-number" style="margin-left: -20px; text-align: center;"></div>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -78,9 +93,13 @@
     </header>
 
     <section class="presentation">
-      <div class="jumbotron">
-        <h1><img src="./images/logo/favicon.png" width="100"> Oriphoto</h1>
-        <p>Oriphoto est l'application e-commerce sur le thème des caméras vintage. Trouvez le modèle qui vous correspond parmi notre panel d'appareils et faites votre choix !</p>
+      <div class="jumbotron intro">
+        <h1><img src="./images/logo/favicon.png" width="100" /> Oriphoto</h1>
+        <p>
+          Oriphoto est l'application e-commerce sur le thème des caméras
+          vintage. Trouvez le modèle qui vous correspond parmi notre sélection
+          d'appareils et faites votre choix !
+        </p>
       </div>
     </section>
 
@@ -94,7 +113,7 @@
     </main>
 
     <!-- Scripts JS -->
-    <script src="./js/script.js"></script>
+    <script src="./js/index.js"></script>
     <script>
       productsLibrary();
     </script>
@@ -102,7 +121,7 @@
 
     <footer class="bg-dark">
       <div class="text-center">
-          <h2></h2>
+        <h2></h2>
         <p class="">Application proposée par Orinoco</p>
       </div>
     </footer>
