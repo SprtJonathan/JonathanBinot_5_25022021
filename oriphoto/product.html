@@ -62,7 +62,7 @@
             </button>
             <div id="navbarContent" class="collapse navbar-collapse">
               <ul class="navbar-nav">
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a class="nav-link ml-5" href="index.html">Accueil</a>
                 </li>
                 <li class="nav-item">
@@ -91,9 +91,15 @@
       </div>
     </header>
 
-    <main id="product-details-main" class="container-fluid">
+    <section class="card product-page-title shadow">
+      <h2 class="choice-title">Votre choix</h1>
+      <h2 id="product-name"></h2>
+    </section>
+
+    <main id="product-details-main" class="">
       <div id="error">
-        <p id="error__msg">
+        <div class="loading"></div>
+        <p class="error">
           Une erreur est survenue, API introuvable, veuillez réessayer
           ultérieurement.
         </p>
@@ -110,7 +116,7 @@
     <footer class="bg-dark">
       <div class="text-center">
           <h2></h2>
-        <p class="">Application proposée par Orinoco</p>
+        <h3 class="footer-text">Application proposée par Orinoco</h3>
       </div>
     </footer>
   </body>

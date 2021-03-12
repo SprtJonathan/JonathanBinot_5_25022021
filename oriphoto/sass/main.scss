@@ -1,3 +1,5 @@
-@import "./fonts.scss";
-@import "./style.scss";
+@import "./_fonts";
+@import "./_variables";
+@import "./pages/homepage";
+@import "./pages/product";
 @import "../node_modules/bootstrap/scss/bootstrap.scss";

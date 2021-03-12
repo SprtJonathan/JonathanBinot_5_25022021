@@ -10,8 +10,8 @@ body {
 
 h1,
 h2,
-p {
-  font-family: "belligerent_madnessregular";
+.footer-text {
+  font-family: $belligerant-font;
   text-align: center;
 }
 
@@ -24,6 +24,8 @@ h2 {
 }
 
 p {
+  text-align: center;
+  font-family: $raleway-font;
   font-size: 1.25rem;
 }
 
@@ -70,6 +72,12 @@ main {
 figure.product-element {
   margin: 10px auto;
   width: 80%;
+  transition: all ease 500ms;
+  &:hover {
+    background-color: whitesmoke;
+    transform: scale(1.1);
+    transition: all ease 500ms;
+  }
 }
 .product-img {
   width: 100%;
@@ -98,7 +106,7 @@ footer {
   .desktop-cart-text {
     display: none;
   }
-  
+
   .desktop-cart-image {
     display: block;
     z-index: 2;
@@ -108,7 +116,7 @@ footer {
     top: 9px;
     left: 30px;
     z-index: 1;
-    background-color: rgba($color: grey, $alpha: .5);
+    background-color: rgba($color: grey, $alpha: 0.5);
   }
 
   .products-list {
