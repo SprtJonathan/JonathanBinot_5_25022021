@@ -61,7 +61,7 @@ async function productsLibrary() {
         // Lien pour accéder à la page de l'article
         let productSelect = document.createElement("a");
         productSelect.setAttribute("class", "btn btn-primary stretched-link");
-        productSelect.setAttribute("href", "./product.html?id=" + product._id);
+        productSelect.setAttribute("href", "./product.html?id=" + product._id)
 
         /* Configuration de la parenté de chaque élément: 
         Le container se retrouve sous la section contenant les articles, l'image et la légende dans le figure, et les caractéristiques dans le figcaption*/

@@ -1,6 +1,8 @@
 .cart {
+  display: flex;
+  flex-direction: column;
   &--recap {
-    width: 80vw;
+    width: 70vw;
     margin: auto;
   }
   &--product-container {
@@ -10,24 +12,88 @@
     justify-content: space-between;
     margin-top: 25px;
     width: 100%;
+    align-items: center;
+    background-color: whitesmoke;
   }
-  &--product-image {
+  &--product-quantity {
+    &--block {
+      display: flex;
+      flex-direction: row;
+      border: 1px solid black;
+      border-radius: 0.4rem;
+      padding: 0px;
+      width: fit-content;
+    }
+    &--modifier {
+      margin: auto;
+      padding: 0.5rem;
+      width: 3rem;
+      height: 3rem;
+      text-align: center;
+      border-radius: 0.5rem;
+      font-size: 500px;
+      &--minus {
+        &:before {
+          font-family: "Font Awesome 5 Free";
+          content: "\f056";
+          font-size: 20px;
+          font-weight: 600;
+          margin: auto;
+          text-align: center;
+        }
+      }
+      &--plus {
+        &:before {
+          font-family: "Font Awesome 5 Free";
+          content: "\f055";
+          font-size: 20px;
+          font-weight: 600;
+          margin: auto;
+          text-align: center;
+        }
+      }
+    }
+    &--number {
+      margin: auto;
+      padding: 0.6rem;
+    }
+  }
+  &--product-img {
     width: 16rem;
     border-radius: 0px 0px 15px 15px;
-    margin-bottom: 15px;
+    height: 100%;
+    align-items: center;
+    &--block {
+      margin: 15px 0px;
+    }
+  }
+  &--product-remove {
+    height: 100%;
+    margin-top: auto;
+    margin-bottom: auto;
+    &--cross {
+      color: white;
+      font-weight: 600;
+      font-size: 1.5rem;
+    }
+  }
+
+  &--total-section {
+    width: 20vw;
   }
 }
 
 @media (min-width: 1024px) {
   .cart {
+    flex-direction: row;
+    flex-wrap: nowrap;
     &--recap {
     }
     &--product-container {
-      display: block;
+      display: flex;
       flex-direction: row;
-      margin: auto;
     }
-    &--product-image {
+    &--product-img {
       width: 15rem;
       border-radius: 0px 15px 15px 0px;
     }
