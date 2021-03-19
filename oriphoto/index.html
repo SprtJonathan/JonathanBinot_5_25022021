@@ -72,6 +72,7 @@
                     href="shopping-cart.html"
                   >
                     <div class="desktop-cart-text">Mon Panier</div>
+                    <!-- Icône du panier -->
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="32"
@@ -87,8 +88,7 @@
                     <div
                       id="shopping-cart-number"
                       class="cart-item-number"
-                      style="margin-left: -20px; text-align: center"
-                    ></div>
+                    >0</div>
                   </a>
                 </li>
               </ul>
@@ -119,13 +119,6 @@
       </div>
     </main>
 
-    <!-- Scripts JS -->
-    <script src="./js/index.js"></script>
-    <script>
-      productsLibrary();
-    </script>
-    <!-- Scripts JS END -->
-
     <footer class="bg-dark">
       <div class="text-center">
         <h2></h2>
@@ -133,4 +126,14 @@
       </div>
     </footer>
   </body>
+
+  <!-- Scripts JS -->
+  <script src="./js/index.js"></script>
+  <script>
+    productsLibrary();
+  </script>
+  <script>
+    getItemsNumber();
+  </script>
+  <!-- Scripts JS END -->
 </html>

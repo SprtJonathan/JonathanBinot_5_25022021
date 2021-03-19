@@ -1,0 +1,35 @@
+.cart {
+  &--recap {
+    width: 80vw;
+    margin: auto;
+  }
+  &--product-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    margin-top: 25px;
+    width: 100%;
+  }
+  &--product-image {
+    width: 16rem;
+    border-radius: 0px 0px 15px 15px;
+    margin-bottom: 15px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .cart {
+    &--recap {
+    }
+    &--product-container {
+      display: block;
+      flex-direction: row;
+      margin: auto;
+    }
+    &--product-image {
+      width: 15rem;
+      border-radius: 0px 15px 15px 0px;
+    }
+  }
+}
