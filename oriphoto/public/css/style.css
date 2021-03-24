@@ -16,9 +16,12 @@ body {
   width: 100vw;
 }
 
+main {
+  margin-bottom: 5rem;
+}
+
 h1,
-h2,
-.footer-text {
+h2 {
   font-family: "belligerent_madnessregular";
   text-align: center;
 }
@@ -35,6 +38,12 @@ p {
   text-align: center;
   font-family: "Raleway", sans-serif;
   font-size: 1.25rem;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
 }
 
 .shopping-cart-link {
@@ -202,6 +211,13 @@ footer {
   font-size: 1.5rem;
   margin: auto;
 }
+.details--product-selection-block {
+  display: flex;
+  flex-direction: row;
+  height: fit-content;
+  align-items: center;
+  margin: auto;
+}
 .details--product-options {
   margin: 15px;
 }
@@ -236,7 +252,7 @@ footer {
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: space-between;
-  margin-top: 25px;
+  margin: 10px 0px;
   width: 100%;
   align-items: center;
   background-color: whitesmoke;
@@ -256,7 +272,6 @@ footer {
   height: 3rem;
   text-align: center;
   border-radius: 0.5rem;
-  font-size: 500px;
 }
 .cart--product-quantity--modifier--minus:before {
   font-family: "Font Awesome 5 Free";
@@ -277,6 +292,7 @@ footer {
 .cart--product-quantity--number {
   margin: auto;
   padding: 0.6rem;
+  font-size: 1.2em;
 }
 .cart--product-img {
   width: 16rem;
@@ -297,8 +313,8 @@ footer {
   font-weight: 600;
   font-size: 1.5rem;
 }
-.cart--total-section {
-  width: 20vw;
+.cart--total {
+  width: 40vw;
 }
 
 @media (min-width: 1024px) {

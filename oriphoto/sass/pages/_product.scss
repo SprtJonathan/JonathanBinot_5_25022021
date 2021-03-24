@@ -63,6 +63,13 @@
     font-size: 1.5rem;
     margin: auto;
   }
+  &--product-selection-block{
+    display: flex;
+    flex-direction: row;
+    height: fit-content;
+    align-items: center;
+    margin: auto;
+  }
   &--product-options {
     margin: 15px;
   }

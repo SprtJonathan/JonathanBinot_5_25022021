@@ -1,0 +1,39 @@
+html {
+  overflow-x: hidden;
+  width: 100vw;
+}
+
+body {
+  overflow-x: hidden;
+  width: 100vw;
+}
+
+main {
+    margin-bottom: 5rem;
+}
+
+h1,
+h2 {
+  font-family: $belligerant-font;
+  text-align: center;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+p {
+  text-align: center;
+  font-family: $raleway-font;
+  font-size: 1.25rem;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+}

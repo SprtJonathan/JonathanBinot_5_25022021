@@ -49,8 +49,13 @@ async function displayShoppingCart() {
         cartTotal.setAttribute("id", "cart-total");
         cartTotal.setAttribute("class", "card cart--total");
 
+        let cartForm = document.createElement("section");
+        cartForm.setAttribute("id", "cart-form");
+        cartForm.setAttribute("class", "card cart--form");
+
         main.appendChild(cartCheckout);
         main.appendChild(cartTotal);
+        main.appendChild(cartForm);
 
         // Structure de chaque article
         for (let i = 0; i < shoppingCart.length; i++) {
@@ -84,38 +89,46 @@ async function displayShoppingCart() {
             let productFiguresContainer = document.createElement("aside");
             productFiguresContainer.setAttribute("class", "cart--product-figures--block");
 
+            // Bloc contenant la quantité d'articles d'un même objet et les boutons + et -
             let productQuantityBlock = document.createElement("div");
             productQuantityBlock.setAttribute("class", "cart--product-quantity--block");
 
+            // Bouton servant à réduire la quantité d'articles
             let productQuantityLess = document.createElement("a");
             productQuantityLess.setAttribute("class", "cart--product-quantity--modifier--minus btn btn-secondary");
             productQuantityLess.setAttribute("id", "button-less--" + [i]);
             productQuantityLess.setAttribute("href", "");
             productQuantityLess.textContent = "";
 
+            // Texte indiquant la quantité d'un même article
             let productQuantity = document.createElement("h4");
             productQuantity.setAttribute("class", "cart--product-quantity--number");
             productQuantity.textContent = "Quantité: " + shoppingCart[i].quantity;
 
+            // Bouton servant à augmenter la quantité d'articles
             let productQuantityMore = document.createElement("a");
             productQuantityMore.setAttribute("class", "cart--product-quantity--modifier--plus btn btn-primary");
             productQuantityMore.setAttribute("id", "button-more--" + [i]);
             productQuantityLess.setAttribute("href", "");
             productQuantityMore.textContent = "";
 
+            // Bouton contenant le prix du produit
             let productPrice = document.createElement("h3");
             productPrice.setAttribute("class", "cart--product-price");
 
+            // Bloc contenant le bouton servant à retirer un article du panier
             let removeProduct = document.createElement("div");
             removeProduct.setAttribute("id", "delete-product-block");
             removeProduct.setAttribute("class", "cart--product-remove btn btn-danger");
+
+            // Bouton servant à retirer un article du panier
             removeProductCross = document.createElement("a");
             removeProductCross.setAttribute("class", "cart--product-remove--cross");
             removeProductCross.setAttribute("id", "delete-product--" + [i]);
             removeProductCross.setAttribute("href", "");
             removeProductCross.textContent = "X";
 
-
+            // Organisation de chacun des éléments précédemment créés
             cartCheckout.appendChild(productContainer);
             productContainer.appendChild(productImgContainer);
             productContainer.appendChild(productNameContainer);
@@ -131,20 +144,23 @@ async function displayShoppingCart() {
             productFiguresContainer.appendChild(productPrice);
             removeProduct.appendChild(removeProductCross);
 
-            console.log(shoppingCart);
-
+            // Affichage du prix total (quantité comprise)
             productPrice.textContent = "Total " + parseFloat((shoppingCart[i].price * shoppingCart[i].quantity) / 100).toFixed(2) + " €";
+
             let buttonQtLess = document.getElementById("button-less--" + [i])
             let buttonQtMore = document.getElementById("button-more--" + [i])
             let buttonDelete = document.getElementById("delete-product--" + [i])
 
             // Bouton pour dimminuer la quantité d'un même produit
+            // On récupère la quantité de l'article "en cours", et on décrémente sa valeur
+            // Puis on stocke la nouvelle valeur dans un objet qu'on renvoie au localStorage
+            // à la position initiale de l'article
             buttonQtLess.addEventListener("click", function (event) {
                 event.preventDefault()
                 let itemQuantity = shoppingCart[i].quantity;
                 // Si la quantité de l'article est supérieure à 1 alors on peut dimminuer
                 if (itemQuantity > 1) {
-                    itemQuantity = itemQuantity - 1;
+                    itemQuantity = parseInt(itemQuantity) - 1;
                     let newObject = {
                         image: shoppingCart[i].image,
                         name: shoppingCart[i].name,
@@ -171,7 +187,7 @@ async function displayShoppingCart() {
                 let itemQuantity = shoppingCart[i].quantity;
                 // Si la quantité de l'article est inférieure à 20 alors on peut augmenter
                 if (itemQuantity < 20) {
-                    itemQuantity = itemQuantity + 1;
+                    itemQuantity = parseInt(itemQuantity) + 1;
                     let newObject = {
                         image: shoppingCart[i].image,
                         name: shoppingCart[i].name,
@@ -207,6 +223,10 @@ async function displayShoppingCart() {
         let cartNumberOfProducts = document.createElement("article");
         cartNumberOfProducts.setAttribute("class", "cart--total--items--block");
 
+        let cartNumbersBlock = document.createElement("div");
+        cartNumbersBlock.setAttribute("id", "recap-number");
+        cartNumbersBlock.setAttribute("class", "cart--product-container shadow-sm");
+
         let numberOfItems = document.createElement("h3");
         numberOfItems.setAttribute("id", "total-items-number");
         numberOfItems.setAttribute("class", "cart--total--items-number");
@@ -214,10 +234,17 @@ async function displayShoppingCart() {
         let cartTotalPrice = document.createElement("article");
         cartTotalPrice.setAttribute("id", "total-items-price");
         cartTotalPrice.setAttribute("class", "cart--total--price--block");
+
         let cartPrice = document.createElement("h3");
         cartPrice.setAttribute("id", "total-price");
         cartPrice.setAttribute("class", "cart--total--price");
-
+        /*
+                let buyButton = document.createElement("a");
+                buyButton.setAttribute("id", "button-warning");
+                buyButton.setAttribute("class", "btn-warning cart--buy-button");
+                buyButton.setAttribute("href", "payment.html");
+                buyButton.textContent = "Procéder au paiement";
+        */
 
         // Calcul de la somme totale à payer
         let totalPrice = 0;
@@ -227,13 +254,76 @@ async function displayShoppingCart() {
             cartPrice.textContent = "Total à payer: " + parseFloat(totalPrice).toFixed(2) + "€";
         }
 
-        cartTotal.appendChild(cartNumberOfProducts);
-        cartTotal.appendChild(cartTotalPrice);
+        // Calcul du nombre total d'articles
+        let totalQuantity = 0;
+        for (i = 0; i < shoppingCart.length; i++) {
+            totalQuantity = parseInt(shoppingCart[i].quantity) + parseInt(totalQuantity);
+            numberOfItems.textContent = "Nombre d'aricles dans le panier: " + totalQuantity;
+        }
+
+        cartTotal.appendChild(cartNumbersBlock);
+        cartNumbersBlock.appendChild(cartNumberOfProducts);
+        cartNumbersBlock.appendChild(cartTotalPrice);
+        // cartTotal.appendChild(buyButton);
         cartNumberOfProducts.appendChild(numberOfItems);
         cartTotalPrice.appendChild(cartPrice);
 
 
+        // Création du formulaire d'informations de l'acheteur
 
+        let shoppingForm = document.createElement("form");
+        shoppingForm.setAttribute("action", "");
+        shoppingForm.setAttribute("method", "post");
+        shoppingForm.setAttribute("class", "shopping-form");
 
+        // Création des différents champs du formulaire
+
+        // Blocs contenant les noms et prénoms des clients
+        // Bloc de nom
+        let formNameBlock = document.createElement("div");
+        formNameBlock.setAttribute("class", "shopping-form--name--block");
+
+        // Bloc de prénom
+        let formSurnameBlock = document.createElement("div");
+        formSurnameBlock.setAttribute("class", "shopping-form--surname--block");
+
+        // Label du champ nom
+        let formNameLabel = document.createElement("label");
+        formNameLabel.setAttribute("for", "name");
+        formNameLabel.textContent = "Nom";
+
+        // Label du champ prénom
+        let formSurnameLabel = document.createElement("label");
+        formSurnameLabel.setAttribute("for", "surname");
+        formSurnameLabel.textContent = "Prénom";
+
+        // Champ nom
+        let formName = document.createElement("input");
+        formName.setAttribute("type", "text");
+        formName.setAttribute("name", "name");
+        formName.setAttribute("id", "name");
+        formName.setAttribute("required", true)
+
+        // Champ prénom
+        let formSurname = document.createElement("input");
+        formSurname.setAttribute("type", "text");
+        formSurname.setAttribute("name", "surname");
+        formSurname.setAttribute("id", "surname");
+        formSurname.setAttribute("required", true);
+
+        // Bouton d'achat
+        let formSubmit = document.createElement("input");
+        formSubmit.setAttribute("type", "submit");
+        formSubmit.setAttribute("value", "Acheter " + totalQuantity + " articles");
+        formSubmit.setAttribute("class", "btn-warning cart--buy-button shadow-sm");
+
+        cartForm.appendChild(shoppingForm);
+        shoppingForm.appendChild(formSurnameBlock);
+        shoppingForm.appendChild(formNameBlock);
+        formSurnameBlock.appendChild(formSurnameLabel);
+        formSurnameBlock.appendChild(formSurname);
+        formNameBlock.appendChild(formNameLabel);
+        formNameBlock.appendChild(formName);
+        shoppingForm.appendChild(formSubmit);
     }
 }

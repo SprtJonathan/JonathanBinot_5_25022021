@@ -1,34 +1,3 @@
-html {
-  overflow-x: hidden;
-  width: 100vw;
-}
-
-body {
-  overflow-x: hidden;
-  width: 100vw;
-}
-
-h1,
-h2,
-.footer-text {
-  font-family: $belligerant-font;
-  text-align: center;
-}
-
-h1 {
-  font-size: 3rem;
-}
-
-h2 {
-  font-size: 1.5rem;
-}
-
-p {
-  text-align: center;
-  font-family: $raleway-font;
-  font-size: 1.25rem;
-}
-
 .shopping-cart-link {
   position: relative;
   display: flex;

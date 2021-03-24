@@ -68,6 +68,10 @@ async function productDetailPage() {
     let selectedProductPrice = document.createElement("h4");
     selectedProductPrice.setAttribute("class", "details--product-price");
 
+    // Select Div block
+    let selectedProductSelectBlock = document.createElement("div");
+    selectedProductSelectBlock.setAttribute("class", "details--product-selection-block");
+
     // Options de l'article
     let selectedProductSelect = document.createElement("select");
     selectedProductSelect.setAttribute("id", "product-options");
@@ -139,8 +143,9 @@ async function productDetailPage() {
     selectedProductDetailsBlock.appendChild(selectedProductName);
     selectedProductDetailsBlock.appendChild(selectedProductDescription);
     selectedProductBuyBlock.appendChild(selectedProductPrice);
-    selectedProductBuyBlock.appendChild(selectedProductSelect);
-    selectedProductBuyBlock.appendChild(selectedProductQuantitySelect);
+    selectedProductBuyBlock.appendChild(selectedProductSelectBlock);
+    selectedProductSelectBlock.appendChild(selectedProductSelect);
+    selectedProductSelectBlock.appendChild(selectedProductQuantitySelect);
     selectedProductBuyBlock.appendChild(selectedProductBuy);
 
     document.getElementById("product-name").textContent = selectedProduct.name;
@@ -216,7 +221,7 @@ addToCart = () => {
             shoppingCart.push(selectedItem);
             localStorage.setItem(cartId, JSON.stringify(shoppingCart))
             console.log("Produit ajouté au panier");
-            alert("Article ajouté au panier");
+            //alert("Article ajouté au panier");
             location.reload();
             console.log(shoppingCart);
         } else {
