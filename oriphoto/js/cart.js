@@ -306,7 +306,7 @@ async function displayShoppingCart() {
             let verifyEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             let verifyCharacters = /[§!@#$%^&*().?":{}|<>]/;
 
-            // 
+            // Message de retour des contrôles
             let returnMessage = "";
 
             //Récupération des inputs
@@ -356,7 +356,8 @@ async function displayShoppingCart() {
             }
 
             if (verifyLetters.test(zipcode) == true || verifyCharacters.test(zipcode) == true || zipcode == "") {
-                returnMessage = returnMessage + "\n" + "Caractères spéciaux ou lettres non autorisés, veuillez vérifier vos informations.";
+                alert("test");
+                //returnMessage = returnMessage + "\n" + "Caractères spéciaux ou lettres non autorisés, veuillez vérifier vos informations.";
             } else {
                 console.log("Format code postal validé")
             }
@@ -386,7 +387,7 @@ async function displayShoppingCart() {
             let orderUrl = apiUrl + "order";
 
             // Appel de l'API grâce à fetch
-            async function sendForm(sendForm, orderUrl) {
+            async function sendForm(customerInfo, orderUrl) {
                 const formResponse = await fetch(apiUrl + productId);
                 const fetchedProducts = await response.json();
                 //console.log(fetchedProducts)

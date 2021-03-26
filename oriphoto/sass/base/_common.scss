@@ -32,6 +32,14 @@ p {
   font-size: 1.25rem;
 }
 
+mark {
+  &.important {
+    background-color: transparent;
+    color: red;
+    font-weight: 500;
+  }
+}
+
 footer {
   position: fixed;
   bottom: 0;
