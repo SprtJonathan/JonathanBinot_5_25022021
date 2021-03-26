@@ -43,19 +43,36 @@ async function displayShoppingCart() {
 
         let cartCheckout = document.createElement("section");
         cartCheckout.setAttribute("id", "cart-checkout");
-        cartCheckout.setAttribute("class", "card cart--recap")
+        cartCheckout.setAttribute("class", "card cart--section cart--section--checkout")
 
-        let cartTotal = document.createElement("section");
-        cartTotal.setAttribute("id", "cart-total");
-        cartTotal.setAttribute("class", "card cart--total");
+        let itemsSectionTitle = document.createElement("h3");
+        itemsSectionTitle.setAttribute("id", "cart-checkout-title");
+        itemsSectionTitle.setAttribute("class", "cart--section--title");
+        itemsSectionTitle.textContent = "Articles sélectionnés";
 
-        let cartForm = document.createElement("section");
-        cartForm.setAttribute("id", "cart-form");
-        cartForm.setAttribute("class", "card cart--form");
+        let recapFormSection = document.getElementById("cart-recap-form");
+
+        let cartTotal = document.getElementById("cart-total");
+
+        let recapSectionTitle = document.createElement("h3");
+        recapSectionTitle.setAttribute("id", "cart-total-title");
+        recapSectionTitle.setAttribute("class", "cart--section--title");
+        recapSectionTitle.textContent = "Récapitulatif de commande";
+
+        let cartForm = document.getElementById("cart-form");
+
+        let formSectionTitle = document.createElement("h3");
+        formSectionTitle.setAttribute("id", "cart-form-title");
+        formSectionTitle.setAttribute("class", "cart--section--title");
+        formSectionTitle.textContent = "Coordonnées";
 
         main.appendChild(cartCheckout);
-        main.appendChild(cartTotal);
-        main.appendChild(cartForm);
+        main.appendChild(recapFormSection);
+        recapFormSection.appendChild(cartTotal);
+        recapFormSection.appendChild(cartForm);
+        cartCheckout.appendChild(itemsSectionTitle);
+        cartTotal.appendChild(recapSectionTitle);
+        cartForm.appendChild(formSectionTitle);
 
         // Structure de chaque article
         for (let i = 0; i < shoppingCart.length; i++) {
@@ -225,19 +242,19 @@ async function displayShoppingCart() {
 
         let cartNumbersBlock = document.createElement("div");
         cartNumbersBlock.setAttribute("id", "recap-number");
-        cartNumbersBlock.setAttribute("class", "cart--product-container shadow-sm");
+        cartNumbersBlock.setAttribute("class", "cart--total--items shadow-sm");
 
         let numberOfItems = document.createElement("h3");
         numberOfItems.setAttribute("id", "total-items-number");
-        numberOfItems.setAttribute("class", "cart--total--items-number");
+        numberOfItems.setAttribute("class", "cart--total--items--number");
 
         let cartTotalPrice = document.createElement("article");
         cartTotalPrice.setAttribute("id", "total-items-price");
-        cartTotalPrice.setAttribute("class", "cart--total--price--block");
+        cartTotalPrice.setAttribute("class", "cart--total--items--block");
 
         let cartPrice = document.createElement("h3");
         cartPrice.setAttribute("id", "total-price");
-        cartPrice.setAttribute("class", "cart--total--price");
+        cartPrice.setAttribute("class", "cart--total--items--price");
         /*
                 let buyButton = document.createElement("a");
                 buyButton.setAttribute("id", "button-warning");
@@ -258,7 +275,7 @@ async function displayShoppingCart() {
         let totalQuantity = 0;
         for (i = 0; i < shoppingCart.length; i++) {
             totalQuantity = parseInt(shoppingCart[i].quantity) + parseInt(totalQuantity);
-            numberOfItems.textContent = "Nombre d'aricles dans le panier: " + totalQuantity;
+            numberOfItems.textContent = "Nombre d'articles dans le panier: " + totalQuantity;
         }
 
         cartTotal.appendChild(cartNumbersBlock);
@@ -268,62 +285,123 @@ async function displayShoppingCart() {
         cartNumberOfProducts.appendChild(numberOfItems);
         cartTotalPrice.appendChild(cartPrice);
 
+        /* Formulaire d'achat */
 
-        // Création du formulaire d'informations de l'acheteur
-
-        let shoppingForm = document.createElement("form");
-        shoppingForm.setAttribute("action", "");
-        shoppingForm.setAttribute("method", "post");
-        shoppingForm.setAttribute("class", "shopping-form");
-
-        // Création des différents champs du formulaire
-
-        // Blocs contenant les noms et prénoms des clients
-        // Bloc de nom
-        let formNameBlock = document.createElement("div");
-        formNameBlock.setAttribute("class", "shopping-form--name--block");
-
-        // Bloc de prénom
-        let formSurnameBlock = document.createElement("div");
-        formSurnameBlock.setAttribute("class", "shopping-form--surname--block");
-
-        // Label du champ nom
-        let formNameLabel = document.createElement("label");
-        formNameLabel.setAttribute("for", "name");
-        formNameLabel.textContent = "Nom";
-
-        // Label du champ prénom
-        let formSurnameLabel = document.createElement("label");
-        formSurnameLabel.setAttribute("for", "surname");
-        formSurnameLabel.textContent = "Prénom";
-
-        // Champ nom
-        let formName = document.createElement("input");
-        formName.setAttribute("type", "text");
-        formName.setAttribute("name", "name");
-        formName.setAttribute("id", "name");
-        formName.setAttribute("required", true)
-
-        // Champ prénom
-        let formSurname = document.createElement("input");
-        formSurname.setAttribute("type", "text");
-        formSurname.setAttribute("name", "surname");
-        formSurname.setAttribute("id", "surname");
-        formSurname.setAttribute("required", true);
+        let shoppingForm = document.getElementById("shopping-form");
 
         // Bouton d'achat
-        let formSubmit = document.createElement("input");
-        formSubmit.setAttribute("type", "submit");
+        let formSubmit = document.getElementById("submit");
         formSubmit.setAttribute("value", "Acheter " + totalQuantity + " articles");
-        formSubmit.setAttribute("class", "btn-warning cart--buy-button shadow-sm");
+        /*formSubmit.addEventListener("click", function (event) {
+            event.preventDefault()
+        });*/
 
         cartForm.appendChild(shoppingForm);
-        shoppingForm.appendChild(formSurnameBlock);
-        shoppingForm.appendChild(formNameBlock);
-        formSurnameBlock.appendChild(formSurnameLabel);
-        formSurnameBlock.appendChild(formSurname);
-        formNameBlock.appendChild(formNameLabel);
-        formNameBlock.appendChild(formName);
-        shoppingForm.appendChild(formSubmit);
+
+        // Fonction permettant de vérifier les champs du formulaire
+        verifyForm = () => {
+            // Vérification des caractères
+            let verifyLetters = /[a-zA-Z]/;
+            let verifyNumbers = /[0-9]/;
+            let verifyEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            let verifyCharacters = /[§!@#$%^&*().?":{}|<>]/;
+
+            // 
+            let returnMessage = "";
+
+            //Récupération des inputs
+
+            let lname = document.getElementById("lname").value;
+            let fname = document.getElementById("fname").value;
+            let email = document.getElementById("email").value;
+            let address = document.getElementById("address").value;
+            let address2 = document.getElementById("address").value;
+            let city = document.getElementById("city").value;
+            let zipcode = document.getElementById("zipcode").value;
+
+            if (verifyNumbers.test(lname) == true || verifyCharacters.test(lname) == true || lname == "") {
+                returnMessage = "Chiffres ou caractères spéciaux non autorisés, veuillez vérifier vos informations.";
+            } else {
+                console.log("Nom validé")
+            }
+
+            if (verifyNumbers.test(fname) == true || verifyCharacters.test(fname) == true || fname == "") {
+                returnMessage = returnMessage + "\n" + "Chiffres ou caractères spéciaux non autorisés, veuillez vérifier vos informations.";
+            } else {
+                console.log("Prénom validé")
+            }
+
+            if (verifyEmail.test(email) == false || email == "") {
+                returnMessage = returnMessage + "\n" + "Caractères spéciaux non autorisés ou format de l'email invalide, veuillez vérifier vos informations.";
+            } else {
+                console.log("Format d'Email validé")
+            }
+
+            if (verifyCharacters.test(address) == true || address == "") {
+                returnMessage = returnMessage + "\n" + "Caractères spéciaux non autorisés, veuillez vérifier vos informations.";
+            } else {
+                console.log("Format d'adresse validé")
+            }
+
+            if (verifyCharacters.test(address2) == true) {
+                returnMessage = returnMessage + "\n" + "Caractères spéciaux non autorisés, veuillez vérifier vos informations.";
+            } else {
+                console.log("Complément d'adresse validé")
+            }
+
+            if (verifyNumbers.test(city) == true || verifyCharacters.test(city) == true || city == "") {
+                returnMessage = returnMessage + "\n" + "Chiffres ou caractères spéciaux non autorisés, veuillez vérifier vos informations.";
+            } else {
+                console.log("Format ville validé")
+            }
+
+            if (verifyLetters.test(zipcode) == true || verifyCharacters.test(zipcode) == true || zipcode == "") {
+                returnMessage = returnMessage + "\n" + "Caractères spéciaux ou lettres non autorisés, veuillez vérifier vos informations.";
+            } else {
+                console.log("Format code postal validé")
+            }
+
+            // Si aucun message d'erreur n'est retourné, 
+            // alors le formulaire est validé et 
+            // on peut enregistrer les informations client dans un nouvel objet
+
+            if (returnMessage != "") {
+                shoppingForm.append("<div id='form-alert'><div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>" + "Des erreurs sont présentes dans vos informations, veuillez les corriger: " + "\n" + checkMessage + "</strong></div></div>");
+            } else {
+                let customerInfo = {
+                    lname: lname,
+                    fname: fname,
+                    email: email,
+                    address: address,
+                    address2: address2,
+                    city: city,
+                    zipcode: zipcode,
+                }
+                return customerInfo;
+            }
+
+            // Confirmation et commande par l'envoi des données précéemment collectées
+            let customerInfo;
+            let products = [];
+            let orderUrl = apiUrl + "order";
+
+            // Appel de l'API grâce à fetch
+            async function sendForm(sendForm, orderUrl) {
+                const formResponse = await fetch(apiUrl + productId);
+                const fetchedProducts = await response.json();
+                //console.log(fetchedProducts)
+
+                console.log("API reached. Code " + response.status);
+                error = document.getElementById("error");
+                if (error) {
+                    error.remove();
+                }
+                return fetchedProducts;
+            }
+
+        };
+
+
+
     }
 }

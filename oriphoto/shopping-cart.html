@@ -12,7 +12,11 @@
       content="Orinoco est un site de e-commerce se démarquant des autres en créant des applications thématiques ne vendant qu’un seul groupe de produits."
     />
 
-    <link rel="icon" type="image/png" href="./images/logo/favicon_orinoco.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="./images/logo/favicon_orinoco.png"
+    />
 
     <link rel="stylesheet" href="./public/css/style.css" />
 
@@ -33,7 +37,10 @@
       integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
       crossorigin="anonymous"
     ></script>
-    <script src="https://kit.fontawesome.com/b4819ea1c6.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/b4819ea1c6.js"
+      crossorigin="anonymous"
+    ></script>
 
     <title>Votre panier</title>
   </head>
@@ -85,10 +92,9 @@
                         d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
                       />
                     </svg>
-                    <div
-                      id="shopping-cart-number"
-                      class="cart-item-number"
-                    >0</div>
+                    <div id="shopping-cart-number" class="cart-item-number">
+                      0
+                    </div>
                   </a>
                 </li>
               </ul>
@@ -99,11 +105,11 @@
     </header>
 
     <section class="card product-page-title shadow">
-      <h2 class="choice-title">Mon panier</h1>
+      <h1 class="choice-title">Mon panier</h1>
       <h2 id="product-name"></h2>
     </section>
 
-    <main id="cart-main" class="card cart">
+    <main id="cart-main" class="cart">
       <div id="error">
         <div class="loading"></div>
         <p class="error">
@@ -113,10 +119,184 @@
       </div>
       <div id="empty-cart">
         <div class="loading"></div>
-        <p class="empty-cart">
-          Votre panier est vide
-        </p>
+        <p class="empty-cart">Votre panier est vide</p>
       </div>
+
+      <section
+        id="cart-recap-form"
+        class="cart--section cart--section--recap-form"
+      >
+        <aside id="cart-total" class="card cart--total container"></aside>
+
+        <aside id="cart-form" class="card cart--form container">
+          <!-- Formulaire à remplir pour procéder à l'achat -->
+          <form
+            method="POST"
+            name="customerInfo"
+            id="shopping-form"
+            class="shopping-form"
+          >
+            <!-- Bloc contenant les champs noms (prénom et nom) -->
+            <div id="form-names" class="shopping-form--names--block form-group">
+              <div id="form-name" class="shopping-form--name--block">
+                <label for="lname">Nom *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="lname"
+                  id="lname"
+                  required
+                  placeholder="Indiquez votre nom de famille"
+                />
+              </div>
+
+              <div id="form-surname" class="shopping-form--surname--block">
+                <label for="fname">Prénom *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="fname"
+                  id="fname"
+                  required
+                  placeholder="Indiquez votre prénom"
+                />
+              </div>
+            </div>
+
+            <!-- Bloc contenant le champ email -->
+            <div id="form-email" class="shopping-form--email--block">
+              <label for="email">Email *</label>
+              <input
+                type="email"
+                class="form-control"
+                name="email"
+                id="email"
+                required
+                placeholder="Indiquez votre adresse email"
+              />
+            </div>
+
+            <!-- Bloc contenant les champs d'adresses -->
+            <div
+              id="form-addresses"
+              class="shopping-form--addresses--block form-group"
+            >
+              <div id="form-address" class="shopping-form--address--block">
+                <label for="address">Adresse *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="address"
+                  id="address"
+                  required
+                  placeholder="Numéro et nom de rue"
+                />
+              </div>
+              <div id="form-address-2" class="shopping-form--address-2--block">
+                <label for="address-2">Complément d'adresse</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="address-2"
+                  id="address-2"
+                  placeholder="Numéro d'appartement, étage, bâtiment"
+                />
+              </div>
+            </div>
+
+            <!-- Bloc contenant les champs code postal et ville -->
+            <div
+              id="form-cityzip"
+              class="shopping-form--cityzip--block form-group"
+            >
+              <div id="form-city" class="shopping-form--city--block">
+                <label for="city">Ville *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="city"
+                  id="city"
+                  required
+                  placeholder="Indiuqez votre ville"
+                />
+              </div>
+
+              <div id="form-zipcode" class="shopping-form--zipcode--block">
+                <label for="zipcode">Code Postal *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="zipcode"
+                  id="zipcode"
+                  required
+                  placeholder="Exemple : 69000"
+                />
+              </div>
+            </div>
+
+            <div id="form-payment" class="shopping-form--payment">
+              <h3 class="shopping-form--payment--text">
+                Choisissez votre moyen de paiement
+              </h3>
+              <article class="shopping-form--payment--block">
+                <label
+                  for="paypal"
+                  class="shopping-form--payment--choice--block container-fluid"
+                >
+                  <figure class="shopping-form--payment--choice--figure col">
+                    <i
+                      class="fab fa-cc-paypal fa-2x shopping-form--payment--choice--image"
+                    ></i>
+
+                    <figcaption class="shopping-form--payment--choice--text">
+                      PayPal
+                    </figcaption>
+                  </figure>
+
+                  <input
+                    type="radio"
+                    id="paypal"
+                    class="shopping-form--payment--choice--radio"
+                    name="drone"
+                    value="credit-card"
+                    aria-label="Bouton de sélection paypal"
+                  />
+                </label>
+
+                <label
+                  for="credit-card"
+                  class="shopping-form--payment--choice--block container-fluid"
+                >
+                  <figure class="shopping-form--payment--choice--figure col">
+                    <i
+                      class="fab fa-cc-mastercard fa-2x shopping-form--payment--choice--image"
+                    ></i>
+
+                    <figcaption class="shopping-form--payment--choice--text">
+                      Carte de crédit
+                    </figcaption>
+                  </figure>
+
+                  <input
+                    type="radio"
+                    id="credit-card"
+                    class="shopping-form--payment--choice--radio"
+                    name="drone"
+                    value="paypal"
+                    aria-label="Bouton de sélection carte de crédit"
+                  />
+                </label>
+              </article>
+            </div>
+
+            <input
+              id="submit"
+              type="submit"
+              class="btn-warning cart--buy-button shadow-sm btn btn-lg btn-block cta-hero"
+            />
+          </form>
+        </aside>
+      </section>
     </main>
 
     <!-- Scripts JS -->
@@ -131,7 +311,7 @@
 
     <footer class="bg-dark">
       <div class="text-center">
-          <h2></h2>
+        <h2></h2>
         <p class="footer-text">Application proposée par Orinoco</p>
       </div>
     </footer>

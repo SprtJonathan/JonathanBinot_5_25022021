@@ -9,7 +9,7 @@ body {
 }
 
 main {
-    margin-bottom: 5rem;
+  margin-bottom: 150px;
 }
 
 h1,
@@ -36,4 +36,8 @@ footer {
   position: fixed;
   bottom: 0;
   width: 100vw;
+}
+
+.footer-text {
+  font-family: $belligerant-font;
 }
