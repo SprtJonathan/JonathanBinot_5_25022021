@@ -2,6 +2,9 @@
 const soldProduct = "cameras"; // Passage du produit vendu en variable afin de pouvoir facilement modifier sa valeur
 const apiUrl = "http://localhost:3000/api/" + soldProduct + "/"; // Lien vers l'API du type de produit vendu
 
+// Variables pour la confirmation et commande par l'envoi des données précéemment collectées
+const orderUrl = apiUrl + "order";
+
 // ID de chaque produit
 let productId = "";
 
@@ -196,6 +199,7 @@ async function displayShoppingCart() {
                 }
 
                 console.log(shoppingCart[i].quantity);
+                console.log(shoppingCart);
             });
 
             // Bouton pour augmenter la quantité d'un même produit
@@ -255,13 +259,6 @@ async function displayShoppingCart() {
         let cartPrice = document.createElement("h3");
         cartPrice.setAttribute("id", "total-price");
         cartPrice.setAttribute("class", "cart--total--items--price");
-        /*
-                let buyButton = document.createElement("a");
-                buyButton.setAttribute("id", "button-warning");
-                buyButton.setAttribute("class", "btn-warning cart--buy-button");
-                buyButton.setAttribute("href", "payment.html");
-                buyButton.textContent = "Procéder au paiement";
-        */
 
         // Calcul de la somme totale à payer
         let totalPrice = 0;
@@ -289,22 +286,15 @@ async function displayShoppingCart() {
 
         let shoppingForm = document.getElementById("shopping-form");
 
-        // Bouton d'achat
-        let formSubmit = document.getElementById("submit");
-        formSubmit.setAttribute("value", "Acheter " + totalQuantity + " articles");
-        /*formSubmit.addEventListener("click", function (event) {
-            event.preventDefault()
-        });*/
-
         cartForm.appendChild(shoppingForm);
 
         // Fonction permettant de vérifier les champs du formulaire
-        verifyForm = () => {
+        async function verifyForm (customerInfo) {
             // Vérification des caractères
             let verifyLetters = /[a-zA-Z]/;
             let verifyNumbers = /[0-9]/;
             let verifyEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            let verifyCharacters = /[§!@#$%^&*().?":{}|<>]/;
+            let verifyCharacters = /[?":{}|<>]/;
 
             // Message de retour des contrôles
             let returnMessage = "";
@@ -319,55 +309,62 @@ async function displayShoppingCart() {
             let city = document.getElementById("city").value;
             let zipcode = document.getElementById("zipcode").value;
 
+            // Vérification de la validité des différents inputs
+            // Nom de famille
             if (verifyNumbers.test(lname) == true || verifyCharacters.test(lname) == true || lname == "") {
-                returnMessage = "Chiffres ou caractères spéciaux non autorisés, veuillez vérifier vos informations.";
+                returnMessage = "<mark class=\"error\">Nom:</mark> les chiffres ou caractères spéciaux ne sont pas autorisés.";
             } else {
                 console.log("Nom validé")
             }
 
+            // Prénom
             if (verifyNumbers.test(fname) == true || verifyCharacters.test(fname) == true || fname == "") {
-                returnMessage = returnMessage + "\n" + "Chiffres ou caractères spéciaux non autorisés, veuillez vérifier vos informations.";
+                returnMessage = returnMessage + "<br>" + "<mark class=\"error\">Prénom:</mark> les chiffres ou caractères spéciaux ne sont pas autorisés.";
             } else {
                 console.log("Prénom validé")
             }
 
+            // Email
             if (verifyEmail.test(email) == false || email == "") {
-                returnMessage = returnMessage + "\n" + "Caractères spéciaux non autorisés ou format de l'email invalide, veuillez vérifier vos informations.";
+                returnMessage = returnMessage + "<br>" + "<mark class=\"error\">Email:</mark> Caractères spéciaux non autorisés ou format de l'email invalide.";
             } else {
                 console.log("Format d'Email validé")
             }
 
+            // Adresse
             if (verifyCharacters.test(address) == true || address == "") {
-                returnMessage = returnMessage + "\n" + "Caractères spéciaux non autorisés, veuillez vérifier vos informations.";
+                returnMessage = returnMessage + "<br>" + "<mark class=\"error\">Adresse:</mark> Caractères spéciaux non autorisés.";
             } else {
                 console.log("Format d'adresse validé")
             }
 
+            // Complément d'adresse
             if (verifyCharacters.test(address2) == true) {
-                returnMessage = returnMessage + "\n" + "Caractères spéciaux non autorisés, veuillez vérifier vos informations.";
+                returnMessage = returnMessage + "<br>" + "<mark class=\"error\">Complément d'adresse:</mark> Caractères spéciaux non autorisés.";
             } else {
                 console.log("Complément d'adresse validé")
             }
 
+            // Ville
             if (verifyNumbers.test(city) == true || verifyCharacters.test(city) == true || city == "") {
-                returnMessage = returnMessage + "\n" + "Chiffres ou caractères spéciaux non autorisés, veuillez vérifier vos informations.";
+                returnMessage = returnMessage + "<br>" + "<mark class=\"error\">Ville:</mark> Chiffres ou caractères spéciaux non autorisés.";
             } else {
                 console.log("Format ville validé")
             }
 
+            // Code postal
             if (verifyLetters.test(zipcode) == true || verifyCharacters.test(zipcode) == true || zipcode == "") {
-                alert("test");
-                //returnMessage = returnMessage + "\n" + "Caractères spéciaux ou lettres non autorisés, veuillez vérifier vos informations.";
+                returnMessage = returnMessage + "<br>" + "<mark class=\"error\">Code Postal:</mark> Caractères spéciaux ou lettres non autorisés.";
             } else {
                 console.log("Format code postal validé")
             }
 
             // Si aucun message d'erreur n'est retourné, 
-            // alors le formulaire est validé et 
-            // on peut enregistrer les informations client dans un nouvel objet
+            // alors le formulaire est validé et on peut enregistrer 
+            // les informations client dans un nouvel objet
 
             if (returnMessage != "") {
-                shoppingForm.append("<div id='form-alert'><div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>" + "Des erreurs sont présentes dans vos informations, veuillez les corriger: " + "\n" + checkMessage + "</strong></div></div>");
+                shoppingForm.insertAdjacentHTML("afterend", "<div id='form-alert'><div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>" + "Erreur: " + "<br>" + returnMessage + "</strong></div></div>");
             } else {
                 let customerInfo = {
                     lname: lname,
@@ -381,28 +378,62 @@ async function displayShoppingCart() {
                 return customerInfo;
             }
 
-            // Confirmation et commande par l'envoi des données précéemment collectées
-            let customerInfo;
-            let products = [];
-            let orderUrl = apiUrl + "order";
-
-            // Appel de l'API grâce à fetch
-            async function sendForm(customerInfo, orderUrl) {
-                const formResponse = await fetch(apiUrl + productId);
-                const fetchedProducts = await response.json();
-                //console.log(fetchedProducts)
-
-                console.log("API reached. Code " + response.status);
-                error = document.getElementById("error");
-                if (error) {
-                    error.remove();
-                }
-                return fetchedProducts;
-            }
-
         };
 
+        // Déclaration des variables de la commande
+        const orderName = "userOrder";
 
+        let customerInfo
+        // Création de l'ID de la commande
+        function createOrderId(responseId) {
+            let orderId = responseId.orderId;
+            console.log(orderId);
+            localStorage.setItem(orderName, orderId);
+        }
+
+        // Bouton d'achat
+        let formSubmit = document.getElementById("submit");
+        formSubmit.setAttribute("value", "Acheter " + totalQuantity + " articles");
+        formSubmit.addEventListener("click", function (event) {
+            event.preventDefault();
+            if (verifyForm() != null) {
+                let orderData = JSON.stringify({ customerInfo, shoppingCart });
+                console.log(orderData)
+                sendForm(orderData);
+                //Une fois la commande faite retour à l'état initial des tableaux/objet/localStorage
+                //contact = {};
+                //products = [];
+                //localStorage.clear();
+            } else {
+                console.log("Administration : ERROR");
+            };
+        });
+
+        // Appel de l'API pour l'envoi des informations grâce à fetch
+        async function sendForm(orderData) {
+            try {
+                const formResponse = await fetch("http://localhost:3000/api/cameras/order", {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    method: 'POST',
+                    body: orderData,
+                });
+
+                if (formResponse.ok) {
+                    let responseId = await formResponse.json();
+                    console.log("API reached. Code " + formResponse.status);
+                    createOrderId(responseId);
+                    window.location.href = "confirm.html";
+                } else {
+                    shoppingForm.insertAdjacentHTML("afterend", "<div id='form-alert'><div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>" + "Une erreur est survenue, merci de réessayer plus tard. Code: " + formResponse.status + "</strong></div></div>");
+                    console.error('Retour du serveur : ', formResponse.status);
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        }
 
     }
 }

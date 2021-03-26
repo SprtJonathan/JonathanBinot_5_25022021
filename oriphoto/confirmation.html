@@ -42,7 +42,7 @@
       crossorigin="anonymous"
     ></script>
 
-    <title>Votre panier</title>
+    <title>Merci pour votre achat !</title>
   </head>
 
   <body>
@@ -73,7 +73,7 @@
                 <li class="nav-item">
                   <a class="nav-link ml-5" href="index.html">Accueil</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a
                     class="nav-link ml-5 shopping-cart-link"
                     href="shopping-cart.html"
@@ -105,11 +105,18 @@
     </header>
 
     <section class="card product-page-title shadow">
-      <h1 class="choice-title">Merci pour votre achat !</h1>
+      <h1 class="choice-title">Mon panier</h1>
       <h2 id="product-name"></h2>
     </section>
 
     <main id="cart-main" class="cart">
+      <div id="error">
+        <div class="loading"></div>
+        <p class="error">
+          Une erreur est survenue, API introuvable, veuillez réessayer
+          ultérieurement.
+        </p>
+      </div>
       <div id="empty-cart">
         <div class="loading"></div>
         <p class="empty-cart">Votre panier est vide</p>
