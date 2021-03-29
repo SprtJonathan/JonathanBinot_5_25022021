@@ -105,208 +105,22 @@
     </header>
 
     <section class="card product-page-title shadow">
-      <h1 class="choice-title">Mon panier</h1>
+      <h1 class="choice-title">Merci pour votre achat !</h1>
       <h2 id="product-name"></h2>
     </section>
 
     <main id="cart-main" class="cart">
-      <div id="error">
-        <div class="loading"></div>
-        <p class="error">
-          Une erreur est survenue, API introuvable, veuillez réessayer
-          ultérieurement.
-        </p>
-      </div>
-      <div id="empty-cart">
-        <div class="loading"></div>
-        <p class="empty-cart">Votre panier est vide</p>
-      </div>
-
-      <section
-        id="cart-recap-form"
-        class="cart--section cart--section--recap-form"
-      >
-        <aside id="cart-total" class="card cart--total container"></aside>
-
-        <aside id="cart-form" class="card cart--form container">
-          <!-- Formulaire à remplir pour procéder à l'achat -->
-          <form
-            method="POST"
-            name="customer-info"
-            id="shopping-form"
-            class="shopping-form"
-          >
-            <!-- Bloc contenant les champs noms (prénom et nom) -->
-            <fieldset id="form-names" class="shopping-form--names--block form-group">
-              <div id="form-name" class="shopping-form--name--block">
-                <label for="lname">Nom  <mark class="important">*</mark></label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="lname"
-                  id="lname"
-                  required
-                  placeholder="Indiquez votre nom de famille"
-                />
-              </div>
-
-              <div id="form-surname" class="shopping-form--surname--block">
-                <label for="fname">Prénom  <mark class="important">*</mark>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="fname"
-                  id="fname"
-                  required
-                  placeholder="Indiquez votre prénom"
-                />
-              </div>
-            </fieldset>
-
-            <!-- Bloc contenant le champ email -->
-            <fieldset id="form-email" class="shopping-form--email--block">
-              <label for="email">Email  <mark class="important">*</mark>
-              <input
-                type="email"
-                class="form-control"
-                name="email"
-                id="email"
-                required
-                placeholder="Indiquez votre adresse email"
-              />
-            </fieldset>
-
-            <!-- Bloc contenant les champs d'adresses -->
-            <fieldset
-              id="form-addresses"
-              class="shopping-form--addresses--block form-group"
-            >
-              <div id="form-address" class="shopping-form--address--block">
-                <label for="address">Adresse  <mark class="important">*</mark>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="address"
-                  id="address"
-                  required
-                  placeholder="Numéro et nom de rue"
-                />
-              </div>
-              <div id="form-address-2" class="shopping-form--address-2--block">
-                <label for="address-2">Complément d'adresse</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="address-2"
-                  id="address-2"
-                  placeholder="Numéro d'appartement, étage, bâtiment"
-                />
-              </div>
-            </fieldset>
-
-            <!-- Bloc contenant les champs code postal et ville -->
-            <fieldset
-              id="form-cityzip"
-              class="shopping-form--cityzip--block form-group"
-            >
-              <div id="form-city" class="shopping-form--city--block">
-                <label for="city">Ville  <mark class="important">*</mark>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="city"
-                  id="city"
-                  required
-                  placeholder="Indiquez votre ville"
-                />
-              </div>
-
-              <div id="form-zipcode" class="shopping-form--zipcode--block">
-                <label for="zipcode">Code Postal  <mark class="important">*</mark>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="zipcode"
-                  id="zipcode"
-                  required
-                  placeholder="Exemple : 69000"
-                />
-              </div>
-            </fieldset>
-
-            <div id="form-payment" class="shopping-form--payment">
-              <h3 class="shopping-form--payment--text">
-                Choisissez votre moyen de paiement
-              </h3>
-              <article class="shopping-form--payment--block">
-                <label
-                  for="paypal"
-                  class="shopping-form--payment--choice--block container-fluid"
-                >
-                  <figure class="shopping-form--payment--choice--figure col">
-                    <i
-                      class="fab fa-cc-paypal fa-2x shopping-form--payment--choice--image"
-                    ></i>
-
-                    <figcaption class="shopping-form--payment--choice--text">
-                      PayPal
-                    </figcaption>
-                  </figure>
-
-                  <input
-                    type="radio"
-                    id="paypal"
-                    class="shopping-form--payment--choice--radio"
-                    name="paypal"
-                    value="credit-card"
-                    aria-label="Bouton de sélection paypal"
-                  />
-                </label>
-
-                <label
-                  for="credit-card"
-                  class="shopping-form--payment--choice--block container-fluid"
-                >
-                  <figure class="shopping-form--payment--choice--figure col">
-                    <i
-                      class="fab fa-cc-mastercard fa-2x shopping-form--payment--choice--image"
-                    ></i>
-
-                    <figcaption class="shopping-form--payment--choice--text">
-                      Carte de crédit
-                    </figcaption>
-                  </figure>
-
-                  <input
-                    type="radio"
-                    id="credit-card"
-                    class="shopping-form--payment--choice--radio"
-                    name="credit-card"
-                    value="paypal"
-                    aria-label="Bouton de sélection carte de crédit"
-                  />
-                </label>
-              </article>
-            </div>
-
-            <input
-              id="submit"
-              type="submit"
-              name="submit"
-              class="btn-warning cart--buy-button shadow-sm btn btn-lg btn-block cta-hero"
-            />
-          </form>
-        </aside>
+      <section id="confirmation-container" class="card container">
+        <h2 id="order-confirmed">Votre commande a été validée</h2>
+        <mar id="recap-text"></div>
+        <a href="./index.html">Revenir à l'accueil</a>
       </section>
     </main>
 
     <!-- Scripts JS -->
-    <script src="./js/cart.js"></script>
+    <script src="./js/confirmation.js"></script>
     <script>
-      displayShoppingCart();
-    </script>
-    <script>
-      getItemsNumber();
+      displayConfirmation();
     </script>
     <!-- Scripts JS END -->
 

@@ -3,24 +3,11 @@ const soldProduct = "cameras"; // Passage du produit vendu en variable afin de p
 const apiUrl = "http://localhost:3000/api/" + soldProduct + "/"; // Lien vers l'API du type de produit vendu
 
 // Variables pour la confirmation et commande par l'envoi des données précéemment collectées
-const orderUrl = apiUrl + "order";
+const orderUrl = "http://localhost:3000/api/cameras/order/";
 
-// ID de chaque produit
-let productId = "";
+// Création du tableau contenant la commande
+let productOrder = [];
 
-// Appel de l'API grâce à fetch
-async function getProductsInfo() {
-    const response = await fetch(apiUrl + productId);
-    const fetchedProducts = await response.json();
-    //console.log(fetchedProducts)
-
-    console.log("API reached. Code " + response.status);
-    error = document.getElementById("error");
-    if (error) {
-        error.remove();
-    }
-    return fetchedProducts;
-}
 
 // Déclaration des variables du panier
 const cartId = "userShoppingCart" // Nom du panier qui sera ajouté au localStorage
@@ -33,9 +20,10 @@ function getItemsNumber() {
     cartNumber.textContent = cartItemsNumber;
 }
 
+console.log(shoppingCart)
+
 async function displayShoppingCart() {
     let main = document.getElementById("cart-main");
-    const selectedProduct = await getProductsInfo();
 
     if (shoppingCart.length > 0) {
 
@@ -237,6 +225,7 @@ async function displayShoppingCart() {
                 localStorage.setItem(cartId, JSON.stringify(shoppingCart));
                 location.reload();
             });
+
         };
 
 
@@ -282,25 +271,25 @@ async function displayShoppingCart() {
         cartNumberOfProducts.appendChild(numberOfItems);
         cartTotalPrice.appendChild(cartPrice);
 
+
         /* Formulaire d'achat */
 
         let shoppingForm = document.getElementById("shopping-form");
 
         cartForm.appendChild(shoppingForm);
 
+
+
+        let formBoolean = false;
         // Fonction permettant de vérifier les champs du formulaire
-        async function verifyForm (customerInfo) {
+        async function verifyForm() {
             // Vérification des caractères
-            let verifyLetters = /[a-zA-Z]/;
+            let verifyLetters = /[A-Za-z]/;
             let verifyNumbers = /[0-9]/;
             let verifyEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             let verifyCharacters = /[?":{}|<>]/;
 
-            // Message de retour des contrôles
-            let returnMessage = "";
-
-            //Récupération des inputs
-
+            // Récupération des inputs
             let lname = document.getElementById("lname").value;
             let fname = document.getElementById("fname").value;
             let email = document.getElementById("email").value;
@@ -309,12 +298,16 @@ async function displayShoppingCart() {
             let city = document.getElementById("city").value;
             let zipcode = document.getElementById("zipcode").value;
 
+            // Message de retour des contrôles
+            let returnMessage = "";
+
             // Vérification de la validité des différents inputs
             // Nom de famille
             if (verifyNumbers.test(lname) == true || verifyCharacters.test(lname) == true || lname == "") {
                 returnMessage = "<mark class=\"error\">Nom:</mark> les chiffres ou caractères spéciaux ne sont pas autorisés.";
+                console.log("erreur" + lname)
             } else {
-                console.log("Nom validé")
+                console.log("Nom validé" + lname)
             }
 
             // Prénom
@@ -353,7 +346,7 @@ async function displayShoppingCart() {
             }
 
             // Code postal
-            if (verifyLetters.test(zipcode) == true || verifyCharacters.test(zipcode) == true || zipcode == "") {
+            if (verifyNumbers.test(zipcode) == false || verifyLetters.test(zipcode) == true || zipcode == "") {
                 returnMessage = returnMessage + "<br>" + "<mark class=\"error\">Code Postal:</mark> Caractères spéciaux ou lettres non autorisés.";
             } else {
                 console.log("Format code postal validé")
@@ -365,8 +358,10 @@ async function displayShoppingCart() {
 
             if (returnMessage != "") {
                 shoppingForm.insertAdjacentHTML("afterend", "<div id='form-alert'><div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>" + "Erreur: " + "<br>" + returnMessage + "</strong></div></div>");
+                formBoolean = false;
             } else {
-                let customerInfo = {
+                // Construction de l'objet contenant les infos du client
+                customerInfo = {
                     lname: lname,
                     fname: fname,
                     email: email,
@@ -375,65 +370,72 @@ async function displayShoppingCart() {
                     city: city,
                     zipcode: zipcode,
                 }
-                return customerInfo;
+                console.log("formulaire validé")
+                console.log(customerInfo)
+                formBoolean = true;
             }
+
 
         };
 
         // Déclaration des variables de la commande
         const orderName = "userOrder";
-
-        let customerInfo
-        // Création de l'ID de la commande
-        function createOrderId(responseId) {
-            let orderId = responseId.orderId;
-            console.log(orderId);
-            localStorage.setItem(orderName, orderId);
-        }
-
+        let customerInfo;
         // Bouton d'achat
         let formSubmit = document.getElementById("submit");
         formSubmit.setAttribute("value", "Acheter " + totalQuantity + " articles");
         formSubmit.addEventListener("click", function (event) {
             event.preventDefault();
-            if (verifyForm() != null) {
-                let orderData = JSON.stringify({ customerInfo, shoppingCart });
-                console.log(orderData)
+
+            verifyForm(customerInfo);
+            console.log(customerInfo);
+            if (formBoolean == true) {
+                let orderData = JSON.stringify({ customerInfo, productOrder, totalPrice });
+                console.log(orderData);
                 sendForm(orderData);
-                //Une fois la commande faite retour à l'état initial des tableaux/objet/localStorage
+                //Une fois la commande faite, vidage du panier et du local storage
                 //contact = {};
-                //products = [];
+                //shoppingCart = [];
                 //localStorage.clear();
+                shoppingForm.insertAdjacentHTML("afterend", "<div id='form-alert'><div class='alert alert-primary'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>" + "Formulaire valide" + "</strong></div></div>");
             } else {
-                console.log("Administration : ERROR");
+                shoppingForm.insertAdjacentHTML("afterend", "<div id='form-alert'><div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>" + "Une erreur persiste, veuillez réessayer" + "</strong></div></div>");
+                console.log(customerInfo)
             };
+            console.log(formBoolean)
         });
+
+
 
         // Appel de l'API pour l'envoi des informations grâce à fetch
         async function sendForm(orderData) {
-            try {
-                const formResponse = await fetch("http://localhost:3000/api/cameras/order", {
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    method: 'POST',
-                    body: orderData,
-                });
+            const formResponse = await fetch(orderUrl, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: orderData,
+            });
 
-                if (formResponse.ok) {
-                    let responseId = await formResponse.json();
-                    console.log("API reached. Code " + formResponse.status);
-                    createOrderId(responseId);
-                    window.location.href = "confirm.html";
-                } else {
-                    shoppingForm.insertAdjacentHTML("afterend", "<div id='form-alert'><div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>" + "Une erreur est survenue, merci de réessayer plus tard. Code: " + formResponse.status + "</strong></div></div>");
-                    console.error('Retour du serveur : ', formResponse.status);
-                }
-            } catch (e) {
-                console.log(e);
-            }
+            let responseId = await formResponse.json();
+
+            alert(formResponse.status);
+            console.log("API reached. Code " + formResponse.status);
+            window.location.assign(
+                `./confirmation.html?id=${responseId.orderId}&total=${totalPrice}`
+            );
+
+            /*if (formResponse.ok) {
+                
+            } else {
+                shoppingForm.insertAdjacentHTML("afterend", "<div id='form-alert'><div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>" + "Une erreur est survenue, merci de réessayer plus tard. Code: " + formResponse.status + "</strong></div></div>");
+                console.error('Retour du serveur : ', formResponse.status);
+            }*/
+
         }
+
+
 
     }
 }
