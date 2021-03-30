@@ -6,7 +6,7 @@ const apiUrl = "http://localhost:3000/api/" + soldProduct + "/"; // Lien vers l'
 const orderUrl = apiUrl + "order" + "/";
 
 // Création du tableau contenant la commande
-let productOrder = [];
+let produits = [];
 
 // Déclaration des variables du panier
 const cartId = "userShoppingCart"; // Nom du panier qui sera ajouté au localStorage
@@ -68,8 +68,8 @@ async function displayShoppingCart() {
 
     // Structure de chaque article
     for (let i = 0; i < shoppingCart.length; i++) {
-      // Enregistrement de l'ID des produits dans le tableau productOrder qui sera renvoyé à l'API
-      productOrder.push(shoppingCart[i].id);
+      // Enregistrement de l'ID des produits dans le tableau produits qui sera renvoyé à l'API
+      produits.push(shoppingCart[i].id);
       // Container contenant les informations de l'article
       let productContainer = document.createElement("article");
       productContainer.setAttribute(
@@ -323,14 +323,30 @@ async function displayShoppingCart() {
       let verifyEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       let verifyCharacters = /[?":{}|<>]/;
 
+      let formErrorHTML =
+        "<div id='form-alert'><div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>";
+      let badValue = "Format incorrect:";
+      let badValueLetter = " - Lettres interdites";
+      let badValueFigure = " - Chiffres interdits";
+      let badValueChar = " - Caractères spéciaux interdits";
+      let badValueEmail = " Format d'email non autorisé:";
+
       // Récupération des inputs
-      let lname = document.getElementById("lname").value;
-      let fname = document.getElementById("fname").value;
-      let email = document.getElementById("email").value;
-      let address = document.getElementById("address").value;
-      let address2 = document.getElementById("address").value;
-      let city = document.getElementById("city").value;
-      let zipcode = document.getElementById("zipcode").value;
+      let lnameId = document.getElementById("lname");
+      let fnameId = document.getElementById("fname");
+      let emailId = document.getElementById("email");
+      let addressId = document.getElementById("address");
+      let address2Id = document.getElementById("address");
+      let cityId = document.getElementById("city");
+      let zipcodeId = document.getElementById("zipcode");
+
+      let lname = lnameId.value;
+      let fname = fnameId.value;
+      let email = emailId.value;
+      let address = addressId.value;
+      let address2 = address2Id.value;
+      let city = cityId.value;
+      let zipcode = zipcodeId.value;
 
       // Message de retour des contrôles
       let returnMessage = "";
@@ -342,8 +358,14 @@ async function displayShoppingCart() {
         verifyCharacters.test(lname) == true ||
         lname == ""
       ) {
-        returnMessage =
-          '<mark class="error">Nom:</mark> les chiffres ou caractères spéciaux ne sont pas autorisés.';
+        returnMessage = lnameId.insertAdjacentHTML(
+          "afterend",
+          formErrorHTML +
+            badValue +
+            badValueFigure +
+            badValueChar +
+            "</strong></div></div>"
+        );
         console.log("erreur" + lname);
       } else {
         console.log("Nom validé" + lname);
@@ -355,40 +377,44 @@ async function displayShoppingCart() {
         verifyCharacters.test(fname) == true ||
         fname == ""
       ) {
-        returnMessage =
-          returnMessage +
-          "<br>" +
-          '<mark class="error">Prénom:</mark> les chiffres ou caractères spéciaux ne sont pas autorisés.';
+        returnMessage = fnameId.insertAdjacentHTML(
+          "afterend",
+          formErrorHTML +
+            badValue +
+            badValueFigure +
+            badValueChar +
+            "</strong></div></div>"
+        );
       } else {
         console.log("Prénom validé");
       }
 
       // Email
       if (verifyEmail.test(email) == false || email == "") {
-        returnMessage =
-          returnMessage +
-          "<br>" +
-          '<mark class="error">Email:</mark> Caractères spéciaux non autorisés ou format de l\'email invalide.';
+        returnMessage = emailId.insertAdjacentHTML(
+          "afterend",
+          formErrorHTML + badValueEmail + badValueChar + "</strong></div></div>"
+        );
       } else {
         console.log("Format d'Email validé");
       }
 
       // Adresse
       if (verifyCharacters.test(address) == true || address == "") {
-        returnMessage =
-          returnMessage +
-          "<br>" +
-          '<mark class="error">Adresse:</mark> Caractères spéciaux non autorisés.';
+        returnMessage = addressId.insertAdjacentHTML(
+          "afterend",
+          formErrorHTML + badValue + badValueChar + "</strong></div></div>"
+        );
       } else {
         console.log("Format d'adresse validé");
       }
 
       // Complément d'adresse
       if (verifyCharacters.test(address2) == true) {
-        returnMessage =
-          returnMessage +
-          "<br>" +
-          '<mark class="error">Complément d\'adresse:</mark> Caractères spéciaux non autorisés.';
+        returnMessage = address2Id.insertAdjacentHTML(
+          "afterend",
+          formErrorHTML + badValue + badValueChar + "</strong></div></div>"
+        );
       } else {
         console.log("Complément d'adresse validé");
       }
@@ -399,10 +425,14 @@ async function displayShoppingCart() {
         verifyCharacters.test(city) == true ||
         city == ""
       ) {
-        returnMessage =
-          returnMessage +
-          "<br>" +
-          '<mark class="error">Ville:</mark> Chiffres ou caractères spéciaux non autorisés.';
+        returnMessage = cityId.insertAdjacentHTML(
+          "afterend",
+          formErrorHTML +
+            badValue +
+            badValueFigure +
+            badValueChar +
+            "</strong></div></div>"
+        );
       } else {
         console.log("Format ville validé");
       }
@@ -413,10 +443,14 @@ async function displayShoppingCart() {
         verifyLetters.test(zipcode) == true ||
         zipcode == ""
       ) {
-        returnMessage =
-          returnMessage +
-          "<br>" +
-          '<mark class="error">Code Postal:</mark> Caractères spéciaux ou lettres non autorisés.';
+        returnMessage = zipcodeId.insertAdjacentHTML(
+          "afterend",
+          formErrorHTML +
+            badValue +
+            badValueLetter +
+            badValueChar +
+            "</strong></div></div>"
+        );
       } else {
         console.log("Format code postal validé");
       }
@@ -428,16 +462,15 @@ async function displayShoppingCart() {
       if (returnMessage != "") {
         shoppingForm.insertAdjacentHTML(
           "afterend",
-          "<div id='form-alert'><div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>" +
-          "Erreur: " +
-          "<br>" +
-          returnMessage +
-          "</strong></div></div>"
+          formErrorHTML +
+            "Erreur: Des erreurs sont présentes dans le formulaire, veuillez les corriger" +
+            "<br>" +
+            "</strong></div></div>"
         );
         formBoolean = false;
       } else {
         // Construction de l'objet contenant les infos du client
-        customerInfo = {
+        contact = {
           lname: lname,
           fname: fname,
           email: email,
@@ -447,71 +480,62 @@ async function displayShoppingCart() {
           zipcode: zipcode,
         };
         console.log("formulaire validé");
-        console.log(customerInfo);
+        console.log(contact);
         formBoolean = true;
       }
     }
 
     // Déclaration des variables de la commande
-    let customerInfo;
+    let contact;
     // Bouton d'achat
     let formSubmit = document.getElementById("shopping-form");
     let orderButton = document.getElementById("submit");
     orderButton.textContent = "Commander " + totalQuantity + " articles";
     formSubmit.addEventListener("submit", (event) => {
       event.preventDefault();
-      verifyForm(customerInfo);
-      console.log(customerInfo);
+      verifyForm(contact);
+      console.log(contact);
       if (formBoolean == true) {
         shoppingForm.insertAdjacentHTML(
           "afterend",
           "<div id='form-alert'><div class='alert alert-primary'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>" +
-          "Formulaire valide" +
-          "</strong></div></div>"
+            "Formulaire valide" +
+            "</strong></div></div>"
         );
-        console.log(productOrder)
+        console.log(produits);
         let orderDataObject = {
-          customerInfo,
-          productOrder,
+          contact,
+          produits,
         };
         let orderData = JSON.stringify(orderDataObject);
         sendForm(orderData, orderUrl);
-        console.log(orderDataObject)
+        console.log(orderDataObject);
         //Une fois la commande faite, vidage des valeurs enregistrées et du local storage
-        /*customerInfo = {};
-        productOrder = [];
+        /*contact = {};
+        produits = [];
         localStorage.clear();*/
-      } else {
-        shoppingForm.insertAdjacentHTML(
-          "afterend",
-          "<div id='form-alert'><div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>" +
-          "Une erreur persiste, veuillez réessayer" +
-          "</strong></div></div>"
-        );
-        console.log(customerInfo);
+        console.log(contact);
       }
       console.log(formBoolean);
     });
 
-    const sendForm = (orderData, orderUrl) => {
+    async function sendForm(orderDataObject, orderUrl) {
       return new Promise((responseId) => {
-        let formResponse = new XMLHttpRequest();
-        
-        formResponse.onload = function () {
+        let xhr = new XMLHttpRequest();
 
+        xhr.onload = function () {
           //document.location.assign("./confirmation.html?id=" + responseId.orderId + "&total=" + totalPrice + "&lname=" + lname + "&fname=" + fname);
           responseId(JSON.parse(this.responseText));
-          console.log(orderData);
+          console.log(orderDataObject);
 
-          alert(formResponse.status);
+          alert(xhr.status);
         };
-        formResponse.open("POST", orderUrl);
-        formResponse.setRequestHeader("Content-Type", "application/json");
-        formResponse.send(orderData);
-        console.log(orderData);
+        xhr.open("POST", orderUrl);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(orderDataObject);
+        console.log(orderDataObject);
       });
     };
-
 
     // Appel de l'API pour l'envoi des informations grâce à fetch
     /*async function sendForm(orderData) {
