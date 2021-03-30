@@ -1,3 +1,17 @@
+// Déclaration des variables du panier pour l'initialiser
+const cartId = "userShoppingCart"; // Nom du panier qui sera ajouté au localStorage
+let shoppingCart = JSON.parse(localStorage.getItem(cartId)); // Tableau contenant les éléments ajoutés au panier
+
+// Ajout de l'affichage du nombre d'éléments dans le panier
+// Vérification que le localStorage soit initialisée pour éviter les erreurs
+if (localStorage.getItem(cartId)) {
+    console.log(shoppingCart);
+} else {
+    console.log("Le panier va être initalisé");
+    shoppingCart = [];
+    localStorage.setItem(cartId, JSON.stringify(shoppingCart));
+}
+
 // Définition des variables
 let pageUrl = new URL(document.location.href);
 let orderId = pageUrl.searchParams.get("id");
@@ -18,7 +32,4 @@ async function displayConfirmation() {
     totalPriceElement.setAttribute("class", "order--total-price--text");
     totalPriceElement.textContent = totalPriceText;
     recapSection.appendChild(totalPriceElement);
-
-    
-
 }

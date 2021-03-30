@@ -2,6 +2,26 @@
 const soldProduct = "cameras"; // Passage du produit vendu en variable afin de pouvoir facilement modifier sa valeur
 const apiUrl = "http://localhost:3000/api/" + soldProduct + "/"; // Lien vers l'API du type de produit vendu
 
+// Déclaration des variables du panier
+const cartId = "userShoppingCart"; // Nom du panier qui sera ajouté au localStorage
+let shoppingCart = JSON.parse(localStorage.getItem(cartId)); // Tableau contenant les éléments ajoutés au panier
+
+// Ajout de l'affichage du nombre d'éléments dans le panier
+// Vérification que le localStorage soit initialisée pour éviter les erreurs
+if (localStorage.getItem(cartId)) {
+    console.log(shoppingCart);
+} else {
+    console.log("Le panier va être initalisé");
+    shoppingCart = [];
+    localStorage.setItem(cartId, JSON.stringify(shoppingCart));
+}
+
+function getItemsNumber() {
+    let cartItemsNumber = shoppingCart.length; // Nombre d'articles dans le panier
+    let cartNumber = document.getElementById("shopping-cart-number"); // Nombre d'articles dans le panier
+    cartNumber.textContent = cartItemsNumber;
+}
+
 // ID de chaque produit
 let productId = "";
 
@@ -162,26 +182,7 @@ async function productDetailPage() {
     });
 };
 
-// Déclaration des variables du panier
-const cartId = "userShoppingCart" // Nom du panier qui sera ajouté au localStorage
-let shoppingCart = JSON.parse(localStorage.getItem(cartId)); // Tableau contenant les éléments ajoutés au panier
-
-function getItemsNumber() {
-    let cartItemsNumber = shoppingCart.length; // Nombre d'articles dans le panier
-    let cartNumber = document.getElementById("shopping-cart-number"); // Nombre d'articles dans le panier
-    cartNumber.textContent = cartItemsNumber;
-}
-
-// Vérification que le localStorage soit initialisée pour éviter les erreurs
-if (localStorage.getItem(cartId)) {
-    console.log(cartId);
-} else {
-    console.log("Le panier va être initalisé");
-    let cartInit = [];
-    localStorage.setItem(cartId, JSON.stringify(cartInit));
-}
-
-addToCart = () => {
+async function addToCart() {
     let addToCartButton = document.getElementById("add-to-cart-button");
     addToCartButton.addEventListener("click", buyItem())
     async function buyItem() {

@@ -12,7 +12,16 @@ let products = [];
 const cartId = "userShoppingCart"; // Nom du panier qui sera ajouté au localStorage
 let shoppingCart = JSON.parse(localStorage.getItem(cartId)); // Tableau contenant les éléments ajoutés au panier
 
-// Récupération du nombre d'articles dans le panier
+// Ajout de l'affichage du nombre d'éléments dans le panier
+// Vérification que le localStorage soit initialisée pour éviter les erreurs
+if (localStorage.getItem(cartId)) {
+  console.log(shoppingCart);
+} else {
+  console.log("Le panier va être initalisé");
+  shoppingCart = [];
+  localStorage.setItem(cartId, JSON.stringify(shoppingCart));
+}
+
 function getItemsNumber() {
   let cartItemsNumber = shoppingCart.length; // Nombre d'articles dans le panier
   let cartNumber = document.getElementById("shopping-cart-number"); // Nombre d'articles dans le panier
@@ -26,11 +35,11 @@ async function displayShoppingCart() {
   // Déclaration des variables liées aux éléments principaux de la page
   const main = document.getElementById("cart-main");
   const emptyCart = document.getElementById("empty-cart");
-  
+
   const recapFormSection = document.getElementById("cart-recap-form");
   const shoppingForm = document.getElementById("shopping-form");
 
-  if (shoppingCart != null && shoppingCart.length > 0) {
+  if (shoppingCart.length > 0) {
 
     emptyCart.remove();
 
@@ -482,7 +491,6 @@ async function displayShoppingCart() {
           city: city + ", " + zipcode,
         };
         console.log("formulaire validé");
-        console.log(contact);
         formBoolean = true;
       }
     }
@@ -513,9 +521,9 @@ async function displayShoppingCart() {
         sendForm(orderData, orderUrl);
         console.log(orderData);
         //Une fois la commande faite, vidage des valeurs enregistrées et du local storage
-        contact = {};
-        products = [];
-        localStorage.clear();
+        //contact = {};
+        //products = [];
+        //localStorage.clear();
       }
       console.log(formBoolean);
     });
@@ -533,12 +541,18 @@ async function displayShoppingCart() {
 
       let responseId = await formResponse.json();
 
-      console.log(formResponse.status);
-      console.log("API reached. Code " + formResponse.status);
-      document.location.assign(
-        "./confirmation.html?id=" + responseId.orderId + "&total=" + totalPrice + "&firstName=" + contact.firstName + "&lastName=" + contact.lastName
-      );
+      if (formResponse.status < 300 && formResponse.status >= 200) {
+        let parsedData = JSON.parse(orderData);
+        console.log(formResponse.status);
+        console.log("API reached. Code " + formResponse.status);
+        document.location.assign(
+          "./confirmation.html?id=" + responseId.orderId + "&total=" + totalPrice + "&firstName=" + parsedData.contact.firstName + "&lastName=" + parsedData.contact.lastName
+        );
+      } else {
+        alert("Une erreur s'est produite, veuillez réessayer ultérieurement.")
+      }
     }
+    // Si le panier est vide, alors on supprime le formulaire
   } else {
     recapFormSection.remove();
   }

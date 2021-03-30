@@ -6,11 +6,6 @@ const apiUrl = "http://localhost:3000/api/" + soldProduct + "/"; // Lien vers l'
 const cartId = "userShoppingCart"; // Nom du panier qui sera ajouté au localStorage
 let shoppingCart = JSON.parse(localStorage.getItem(cartId)); // Tableau contenant les éléments ajoutés au panier
 
-// Pour éviter les erreurs potentielles, initialisation du panier vide au chargement de la page
-if (localStorage.getItem(cartId) && shoppingCart == null) {
-    
-} 
-
 // Ajout de l'affichage du nombre d'éléments dans le panier
 // Vérification que le localStorage soit initialisée pour éviter les erreurs
 if (localStorage.getItem(cartId)) {
