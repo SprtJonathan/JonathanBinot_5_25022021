@@ -6,7 +6,7 @@ const apiUrl = "http://localhost:3000/api/" + soldProduct + "/"; // Lien vers l'
 const orderUrl = apiUrl + "order" + "/";
 
 // Création du tableau contenant la commande
-let produits = [];
+let products = [];
 
 // Déclaration des variables du panier
 const cartId = "userShoppingCart"; // Nom du panier qui sera ajouté au localStorage
@@ -22,10 +22,16 @@ function getItemsNumber() {
 console.log(shoppingCart);
 
 async function displayShoppingCart() {
-  let main = document.getElementById("cart-main");
 
-  if (shoppingCart.length > 0) {
-    const emptyCart = document.getElementById("empty-cart");
+  // Déclaration des variables liées aux éléments principaux de la page
+  const main = document.getElementById("cart-main");
+  const emptyCart = document.getElementById("empty-cart");
+  
+  const recapFormSection = document.getElementById("cart-recap-form");
+  const shoppingForm = document.getElementById("shopping-form");
+
+  if (shoppingCart != null && shoppingCart.length > 0) {
+
     emptyCart.remove();
 
     // Création de l'interface du panier
@@ -41,8 +47,6 @@ async function displayShoppingCart() {
     itemsSectionTitle.setAttribute("id", "cart-checkout-title");
     itemsSectionTitle.setAttribute("class", "cart--section--title");
     itemsSectionTitle.textContent = "Articles sélectionnés";
-
-    let recapFormSection = document.getElementById("cart-recap-form");
 
     let cartTotal = document.getElementById("cart-total");
 
@@ -69,7 +73,7 @@ async function displayShoppingCart() {
     // Structure de chaque article
     for (let i = 0; i < shoppingCart.length; i++) {
       // Enregistrement de l'ID des produits dans le tableau produits qui sera renvoyé à l'API
-      produits.push(shoppingCart[i].id);
+      products.push(shoppingCart[i].id);
       // Container contenant les informations de l'article
       let productContainer = document.createElement("article");
       productContainer.setAttribute(
@@ -310,8 +314,6 @@ async function displayShoppingCart() {
 
     /* Formulaire d'achat */
 
-    let shoppingForm = document.getElementById("shopping-form");
-
     cartForm.appendChild(shoppingForm);
 
     let formBoolean = false;
@@ -336,7 +338,7 @@ async function displayShoppingCart() {
       let fnameId = document.getElementById("fname");
       let emailId = document.getElementById("email");
       let addressId = document.getElementById("address");
-      let address2Id = document.getElementById("address");
+      let address2Id = document.getElementById("address-2");
       let cityId = document.getElementById("city");
       let zipcodeId = document.getElementById("zipcode");
 
@@ -361,10 +363,10 @@ async function displayShoppingCart() {
         returnMessage = lnameId.insertAdjacentHTML(
           "afterend",
           formErrorHTML +
-            badValue +
-            badValueFigure +
-            badValueChar +
-            "</strong></div></div>"
+          badValue +
+          badValueFigure +
+          badValueChar +
+          "</strong></div></div>"
         );
         console.log("erreur" + lname);
       } else {
@@ -380,10 +382,10 @@ async function displayShoppingCart() {
         returnMessage = fnameId.insertAdjacentHTML(
           "afterend",
           formErrorHTML +
-            badValue +
-            badValueFigure +
-            badValueChar +
-            "</strong></div></div>"
+          badValue +
+          badValueFigure +
+          badValueChar +
+          "</strong></div></div>"
         );
       } else {
         console.log("Prénom validé");
@@ -428,10 +430,10 @@ async function displayShoppingCart() {
         returnMessage = cityId.insertAdjacentHTML(
           "afterend",
           formErrorHTML +
-            badValue +
-            badValueFigure +
-            badValueChar +
-            "</strong></div></div>"
+          badValue +
+          badValueFigure +
+          badValueChar +
+          "</strong></div></div>"
         );
       } else {
         console.log("Format ville validé");
@@ -446,10 +448,10 @@ async function displayShoppingCart() {
         returnMessage = zipcodeId.insertAdjacentHTML(
           "afterend",
           formErrorHTML +
-            badValue +
-            badValueLetter +
-            badValueChar +
-            "</strong></div></div>"
+          badValue +
+          badValueLetter +
+          badValueChar +
+          "</strong></div></div>"
         );
       } else {
         console.log("Format code postal validé");
@@ -459,25 +461,25 @@ async function displayShoppingCart() {
       // alors le formulaire est validé et on peut enregistrer
       // les informations client dans un nouvel objet
 
+      let address2string = ", " + address2;
+
       if (returnMessage != "") {
         shoppingForm.insertAdjacentHTML(
           "afterend",
           formErrorHTML +
-            "Erreur: Des erreurs sont présentes dans le formulaire, veuillez les corriger" +
-            "<br>" +
-            "</strong></div></div>"
+          "Erreur: Des erreurs sont présentes dans le formulaire, veuillez les corriger" +
+          "<br>" +
+          "</strong></div></div>"
         );
         formBoolean = false;
       } else {
         // Construction de l'objet contenant les infos du client
         contact = {
-          lname: lname,
-          fname: fname,
+          firstName: fname,
+          lastName: lname,
           email: email,
-          address: address,
-          address2: address2,
-          city: city,
-          zipcode: zipcode,
+          address: address + address2string,
+          city: city + ", " + zipcode,
         };
         console.log("formulaire validé");
         console.log(contact);
@@ -499,50 +501,31 @@ async function displayShoppingCart() {
         shoppingForm.insertAdjacentHTML(
           "afterend",
           "<div id='form-alert'><div class='alert alert-primary'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>" +
-            "Formulaire valide" +
-            "</strong></div></div>"
+          "Formulaire valide" +
+          "</strong></div></div>"
         );
-        console.log(produits);
+        console.log(products);
         let orderDataObject = {
           contact,
-          produits,
+          products,
         };
         let orderData = JSON.stringify(orderDataObject);
         sendForm(orderData, orderUrl);
-        console.log(orderDataObject);
+        console.log(orderData);
         //Une fois la commande faite, vidage des valeurs enregistrées et du local storage
-        /*contact = {};
-        produits = [];
-        localStorage.clear();*/
-        console.log(contact);
+        contact = {};
+        products = [];
+        localStorage.clear();
       }
       console.log(formBoolean);
     });
 
-    async function sendForm(orderDataObject, orderUrl) {
-      return new Promise((responseId) => {
-        let xhr = new XMLHttpRequest();
-
-        xhr.onload = function () {
-          //document.location.assign("./confirmation.html?id=" + responseId.orderId + "&total=" + totalPrice + "&lname=" + lname + "&fname=" + fname);
-          responseId(JSON.parse(this.responseText));
-          console.log(orderDataObject);
-
-          alert(xhr.status);
-        };
-        xhr.open("POST", orderUrl);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.send(orderDataObject);
-        console.log(orderDataObject);
-      });
-    };
-
     // Appel de l'API pour l'envoi des informations grâce à fetch
-    /*async function sendForm(orderData) {
+    async function sendForm(orderData, orderUrl) {
       const formResponse = await fetch(orderUrl, {
         method: "POST",
         headers: {
-          Accept: "application/json",
+          "Accept": "application/json",
           "Content-Type": "application/json",
         },
         body: orderData,
@@ -550,11 +533,13 @@ async function displayShoppingCart() {
 
       let responseId = await formResponse.json();
 
-      alert(formResponse.status);
+      console.log(formResponse.status);
       console.log("API reached. Code " + formResponse.status);
       document.location.assign(
-        "./confirmation.html?id=" + responseId.orderId + "&total=" + totalPrice
+        "./confirmation.html?id=" + responseId.orderId + "&total=" + totalPrice + "&firstName=" + contact.firstName + "&lastName=" + contact.lastName
       );
-    }*/
+    }
+  } else {
+    recapFormSection.remove();
   }
 }

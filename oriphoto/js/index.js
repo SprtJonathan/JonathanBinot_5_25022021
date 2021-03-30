@@ -2,6 +2,31 @@
 const soldProduct = "cameras"; // Passage du produit vendu en variable afin de pouvoir facilement modifier sa valeur
 const apiUrl = "http://localhost:3000/api/" + soldProduct + "/"; // Lien vers l'API du type de produit vendu
 
+// Déclaration des variables du panier
+const cartId = "userShoppingCart"; // Nom du panier qui sera ajouté au localStorage
+let shoppingCart = JSON.parse(localStorage.getItem(cartId)); // Tableau contenant les éléments ajoutés au panier
+
+// Pour éviter les erreurs potentielles, initialisation du panier vide au chargement de la page
+if (localStorage.getItem(cartId) && shoppingCart == null) {
+    
+} 
+
+// Ajout de l'affichage du nombre d'éléments dans le panier
+// Vérification que le localStorage soit initialisée pour éviter les erreurs
+if (localStorage.getItem(cartId)) {
+    console.log(shoppingCart);
+} else {
+    console.log("Le panier va être initalisé");
+    shoppingCart = [];
+    localStorage.setItem(cartId, JSON.stringify(shoppingCart));
+}
+
+function getItemsNumber() {
+    let cartItemsNumber = shoppingCart.length; // Nombre d'articles dans le panier
+    let cartNumber = document.getElementById("shopping-cart-number"); // Nombre d'articles dans le panier
+    cartNumber.textContent = cartItemsNumber;
+}
+
 // ID de chaque produit
 let productId = "";
 
@@ -79,23 +104,3 @@ async function productsLibrary() {
 
     });
 };
-
-// Ajout de l'affichage du nombre d'éléments dans le panier
-// Déclaration des variables du panier
-const cartId = "userShoppingCart" // Nom du panier qui sera ajouté au localStorage
-let shoppingCart = JSON.parse(localStorage.getItem(cartId)); // Tableau contenant les éléments ajoutés au panier
-
-// Vérification que le localStorage soit initialisée pour éviter les erreurs
-if (localStorage.getItem(cartId)) {
-    console.log(cartId);
-} else {
-    console.log("Le panier va être initalisé");
-    let cartInit = [];
-    localStorage.setItem(cartId, JSON.stringify(cartInit));
-}
-
-function getItemsNumber() {
-    let cartItemsNumber = shoppingCart.length; // Nombre d'articles dans le panier
-    let cartNumber = document.getElementById("shopping-cart-number"); // Nombre d'articles dans le panier
-    cartNumber.textContent = cartItemsNumber;
-}
