@@ -1,5 +1,5 @@
 // Définition des variables
-let pageUrl = new URL(window.location.href);
+let pageUrl = new URL(document.location.href);
 let orderId = pageUrl.searchParams.get("id");
 let totalPrice = pageUrl.searchParams.get("total");
 totalPriceText = "Total payé: " + parseFloat(totalPrice).toFixed(2) + "€";

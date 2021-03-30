@@ -3,7 +3,7 @@ const soldProduct = "cameras"; // Passage du produit vendu en variable afin de p
 const apiUrl = "http://localhost:3000/api/" + soldProduct + "/"; // Lien vers l'API du type de produit vendu
 
 // Variables pour la confirmation et commande par l'envoi des données précéemment collectées
-const orderUrl = "http://localhost:3000/api/cameras/order/";
+const orderUrl = apiUrl + "order" + "/";
 
 // Création du tableau contenant la commande
 let productOrder = [];
@@ -429,10 +429,10 @@ async function displayShoppingCart() {
         shoppingForm.insertAdjacentHTML(
           "afterend",
           "<div id='form-alert'><div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>" +
-            "Erreur: " +
-            "<br>" +
-            returnMessage +
-            "</strong></div></div>"
+          "Erreur: " +
+          "<br>" +
+          returnMessage +
+          "</strong></div></div>"
         );
         formBoolean = false;
       } else {
@@ -455,9 +455,10 @@ async function displayShoppingCart() {
     // Déclaration des variables de la commande
     let customerInfo;
     // Bouton d'achat
-    let formSubmit = document.getElementById("submit");
-    formSubmit.setAttribute("value", "Acheter " + totalQuantity + " articles");
-    formSubmit.addEventListener("click", function (event) {
+    let formSubmit = document.getElementById("shopping-form");
+    let orderButton = document.getElementById("submit");
+    orderButton.textContent = "Commander " + totalQuantity + " articles";
+    formSubmit.addEventListener("submit", (event) => {
       event.preventDefault();
       verifyForm(customerInfo);
       console.log(customerInfo);
@@ -465,16 +466,18 @@ async function displayShoppingCart() {
         shoppingForm.insertAdjacentHTML(
           "afterend",
           "<div id='form-alert'><div class='alert alert-primary'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>" +
-            "Formulaire valide" +
-            "</strong></div></div>"
+          "Formulaire valide" +
+          "</strong></div></div>"
         );
+        console.log(productOrder)
         let orderDataObject = {
-          productOrder,
           customerInfo,
+          productOrder,
         };
         let orderData = JSON.stringify(orderDataObject);
-        sendForm(orderData);
-        //Une fois la commande faite, vidage du panier et du local storage
+        sendForm(orderData, orderUrl);
+        console.log(orderDataObject)
+        //Une fois la commande faite, vidage des valeurs enregistrées et du local storage
         /*customerInfo = {};
         productOrder = [];
         localStorage.clear();*/
@@ -482,16 +485,36 @@ async function displayShoppingCart() {
         shoppingForm.insertAdjacentHTML(
           "afterend",
           "<div id='form-alert'><div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>" +
-            "Une erreur persiste, veuillez réessayer" +
-            "</strong></div></div>"
+          "Une erreur persiste, veuillez réessayer" +
+          "</strong></div></div>"
         );
         console.log(customerInfo);
       }
       console.log(formBoolean);
     });
 
+    const sendForm = (orderData, orderUrl) => {
+      return new Promise((responseId) => {
+        let formResponse = new XMLHttpRequest();
+        
+        formResponse.onload = function () {
+
+          //document.location.assign("./confirmation.html?id=" + responseId.orderId + "&total=" + totalPrice + "&lname=" + lname + "&fname=" + fname);
+          responseId(JSON.parse(this.responseText));
+          console.log(orderData);
+
+          alert(formResponse.status);
+        };
+        formResponse.open("POST", orderUrl);
+        formResponse.setRequestHeader("Content-Type", "application/json");
+        formResponse.send(orderData);
+        console.log(orderData);
+      });
+    };
+
+
     // Appel de l'API pour l'envoi des informations grâce à fetch
-    async function sendForm(orderData) {
+    /*async function sendForm(orderData) {
       const formResponse = await fetch(orderUrl, {
         method: "POST",
         headers: {
@@ -505,9 +528,9 @@ async function displayShoppingCart() {
 
       alert(formResponse.status);
       console.log("API reached. Code " + formResponse.status);
-      window.location.assign(
+      document.location.assign(
         "./confirmation.html?id=" + responseId.orderId + "&total=" + totalPrice
       );
-    }
+    }*/
   }
 }
