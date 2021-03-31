@@ -12,17 +12,16 @@ let products = [];
 const cartId = "userShoppingCart"; // Nom du panier qui sera ajouté au localStorage
 let shoppingCart = JSON.parse(localStorage.getItem(cartId)); // Tableau contenant les éléments ajoutés au panier
 
-// Ajout de l'affichage du nombre d'éléments dans le panier
-// Vérification que le localStorage soit initialisée pour éviter les erreurs
-if (localStorage.getItem(cartId)) {
-  console.log(shoppingCart);
-} else {
-  console.log("Le panier va être initalisé");
-  shoppingCart = [];
-  localStorage.setItem(cartId, JSON.stringify(shoppingCart));
-}
-
 function getItemsNumber() {
+  // Ajout de l'affichage du nombre d'éléments dans le panier
+  // Vérification que le localStorage soit initialisée pour éviter les erreurs
+  if (localStorage.getItem(cartId)) {
+    console.log(shoppingCart);
+  } else {
+    console.log("Le panier va être initalisé");
+    shoppingCart = [];
+    localStorage.setItem(cartId, JSON.stringify(shoppingCart));
+  }
   let cartItemsNumber = shoppingCart.length; // Nombre d'articles dans le panier
   let cartNumber = document.getElementById("shopping-cart-number"); // Nombre d'articles dans le panier
   cartNumber.textContent = cartItemsNumber;
@@ -31,7 +30,6 @@ function getItemsNumber() {
 console.log(shoppingCart);
 
 async function displayShoppingCart() {
-
   // Déclaration des variables liées aux éléments principaux de la page
   const main = document.getElementById("cart-main");
   const emptyCart = document.getElementById("empty-cart");
@@ -40,7 +38,6 @@ async function displayShoppingCart() {
   const shoppingForm = document.getElementById("shopping-form");
 
   if (shoppingCart.length > 0) {
-
     emptyCart.remove();
 
     // Création de l'interface du panier
@@ -372,10 +369,10 @@ async function displayShoppingCart() {
         returnMessage = lnameId.insertAdjacentHTML(
           "afterend",
           formErrorHTML +
-          badValue +
-          badValueFigure +
-          badValueChar +
-          "</strong></div></div>"
+            badValue +
+            badValueFigure +
+            badValueChar +
+            "</strong></div></div>"
         );
         console.log("erreur" + lname);
       } else {
@@ -391,10 +388,10 @@ async function displayShoppingCart() {
         returnMessage = fnameId.insertAdjacentHTML(
           "afterend",
           formErrorHTML +
-          badValue +
-          badValueFigure +
-          badValueChar +
-          "</strong></div></div>"
+            badValue +
+            badValueFigure +
+            badValueChar +
+            "</strong></div></div>"
         );
       } else {
         console.log("Prénom validé");
@@ -439,10 +436,10 @@ async function displayShoppingCart() {
         returnMessage = cityId.insertAdjacentHTML(
           "afterend",
           formErrorHTML +
-          badValue +
-          badValueFigure +
-          badValueChar +
-          "</strong></div></div>"
+            badValue +
+            badValueFigure +
+            badValueChar +
+            "</strong></div></div>"
         );
       } else {
         console.log("Format ville validé");
@@ -457,10 +454,10 @@ async function displayShoppingCart() {
         returnMessage = zipcodeId.insertAdjacentHTML(
           "afterend",
           formErrorHTML +
-          badValue +
-          badValueLetter +
-          badValueChar +
-          "</strong></div></div>"
+            badValue +
+            badValueLetter +
+            badValueChar +
+            "</strong></div></div>"
         );
       } else {
         console.log("Format code postal validé");
@@ -476,9 +473,9 @@ async function displayShoppingCart() {
         shoppingForm.insertAdjacentHTML(
           "afterend",
           formErrorHTML +
-          "Erreur: Des erreurs sont présentes dans le formulaire, veuillez les corriger" +
-          "<br>" +
-          "</strong></div></div>"
+            "Erreur: Des erreurs sont présentes dans le formulaire, veuillez les corriger" +
+            "<br>" +
+            "</strong></div></div>"
         );
         formBoolean = false;
       } else {
@@ -509,8 +506,8 @@ async function displayShoppingCart() {
         shoppingForm.insertAdjacentHTML(
           "afterend",
           "<div id='form-alert'><div class='alert alert-primary'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>" +
-          "Formulaire valide" +
-          "</strong></div></div>"
+            "Formulaire valide" +
+            "</strong></div></div>"
         );
         console.log(products);
         let orderDataObject = {
@@ -533,7 +530,7 @@ async function displayShoppingCart() {
       const formResponse = await fetch(orderUrl, {
         method: "POST",
         headers: {
-          "Accept": "application/json",
+          Accept: "application/json",
           "Content-Type": "application/json",
         },
         body: orderData,
@@ -546,10 +543,17 @@ async function displayShoppingCart() {
         console.log(formResponse.status);
         console.log("API reached. Code " + formResponse.status);
         document.location.assign(
-          "./confirmation.html?id=" + responseId.orderId + "&total=" + totalPrice + "&firstName=" + parsedData.contact.firstName + "&lastName=" + parsedData.contact.lastName
+          "./confirmation.html?id=" +
+            responseId.orderId +
+            "&total=" +
+            totalPrice +
+            "&firstName=" +
+            parsedData.contact.firstName +
+            "&lastName=" +
+            parsedData.contact.lastName
         );
       } else {
-        alert("Une erreur s'est produite, veuillez réessayer ultérieurement.")
+        alert("Une erreur s'est produite, veuillez réessayer ultérieurement.");
       }
     }
     // Si le panier est vide, alors on supprime le formulaire
