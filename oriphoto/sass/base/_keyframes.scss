@@ -1,0 +1,46 @@
+/* Keyframes de l'animation de disparition de l'écran de chargement */
+@keyframes loading-screen-anim {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    z-index: -1;
+  }
+}
+
+/* Keyframes de l'animation du spinner de chargement */
+@keyframes spinner-rotation {
+  0% {
+    transform: rotate(20deg);
+  }
+  90% {
+    transform: rotate(350deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Keyframes de l'animation de l'apparition progressive des articles */
+@keyframes slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Keyframes de l'animation du bouton retour à l'acceuil */
+@keyframes return-rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -8,8 +8,9 @@ body {
   width: 100vw;
 }
 
-main {
+main.index {
   margin-bottom: 150px;
+  animation: slide-up 1s both $loading-screen-delay;
 }
 
 h1,
@@ -40,6 +41,61 @@ mark {
   }
 }
 
+.spinner {
+  border: 15px solid $primary-color;
+  border-top-color: $secondary-color;
+}
+.loading-logo {
+  font-size: 35px;
+}
+
+/* Propriétés de l'écran de chargement (page d'accueil) */
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  z-index: 80;
+  background-color: white;
+  width: 100vw;
+  height: 100%;
+  top: 0px;
+  animation: loading-screen-anim 500ms $loading-screen-delay both;
+}
+
+/* Propriétés du spinner de chargement (page d'accueil) */
+.spinner {
+  height: 10vw;
+  width: 10vw;
+  border: 5px solid $primary-color;
+  border-top-color: $secondary-color;
+  border-radius: 100%;
+  animation: spinner-rotation 0.7s infinite ease 0.25s;
+}
+
+.return-button {
+  position: fixed;
+  color: white;
+  top: 2rem;
+  left: 2rem;
+  background-color: rgba($color: #555555, $alpha: 0.5);
+  border-radius: 50%;
+  padding: 0.65rem 1rem;
+  z-index: 20;
+  &:hover {
+    animation: return-rotation 500ms;
+  }
+  a {
+    color: white;
+    text-decoration: none;
+    &:hover {
+      color: whitesmoke;
+    }
+  }
+}
+
 footer {
   position: fixed;
   bottom: 0;
@@ -48,4 +104,19 @@ footer {
 
 .footer-text {
   font-family: $belligerant-font;
+}
+
+/* Format d'écran de taille minimale de 1024px */
+@media (min-width: 1024px) {
+  #explore-restaurant {
+    padding: 50px;
+  }
+
+  .spinner {
+    border: 25px solid $primary-color;
+    border-top-color: $secondary-color;
+  }
+  .loading-logo {
+    font-size: 45px;
+  }
 }

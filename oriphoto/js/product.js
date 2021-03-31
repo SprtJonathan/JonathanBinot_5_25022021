@@ -168,8 +168,14 @@ async function productDetailPage() {
     selectedProductSelectBlock.appendChild(selectedProductQuantitySelect);
     selectedProductBuyBlock.appendChild(selectedProductBuy);
 
-    document.getElementById("product-name").textContent = selectedProduct.name;
+    let choiceText = document.getElementById("choice-name-section")
+    let productName = document.createElement("h2");
+    productName.setAttribute("id", "product-name");
+    productName.textContent = selectedProduct.name;
+    choiceText.append(productName);
+
     document.title = "Produit : " + selectedProduct.name;
+    
 
 
     // Contenu de chaque balise créée

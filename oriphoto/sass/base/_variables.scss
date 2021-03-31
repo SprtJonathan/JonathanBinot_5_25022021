@@ -1,2 +1,11 @@
 $raleway-font: "Raleway", sans-serif;
 $belligerant-font: "belligerent_madnessregular";
+
+/* Color variables */
+$primary-color: #945EEC;
+$secondary-color: #E58A0A;
+
+/* Animation variables */
+$anim-duration-standard: 500ms;
+$anim-delay-standard: 25ms;
+$loading-screen-delay: $anim-duration-standard + $anim-delay-standard * 2;

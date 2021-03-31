@@ -49,7 +49,7 @@
     <header class="bg-dark">
       <div class="container">
         <div class="row">
-          <nav class="col navbar navbar-expand-lg navbar-dark">
+          <nav id="navbar" class="col navbar navbar-expand-lg navbar-dark">
             <a class="navbar-brand" href="index.html"
               ><img
                 src="./images/logo/oriphoto_logo_light.png"
@@ -62,7 +62,7 @@
               type="button"
               data-toggle="collapse"
               data-target="#navbarContent"
-              aria-controls="navbarSupportedContent"
+              aria-controls="navbar"
               aria-expanded="false"
               aria-label="Toggle navigation"
             >
@@ -104,9 +104,14 @@
       </div>
     </header>
 
+    <div class="return-button">
+      <a href="./index.html" class="stretched-link">
+        <i class="fas fa-arrow-left"></i>
+      </a>
+    </div>
+
     <section class="card product-page-title shadow">
       <h1 class="choice-title">Mon panier</h1>
-      <h2 id="product-name"></h2>
     </section>
 
     <main id="cart-main" class="cart">
@@ -118,6 +123,7 @@
       <section
         id="cart-recap-form"
         class="cart--section cart--section--recap-form"
+        aria-label="Bloc contenant le total de la commande ainsi que le formulaire d'achat"
       >
         <aside id="cart-total" class="card cart--total container"></aside>
 
@@ -130,9 +136,12 @@
             class="shopping-form"
           >
             <!-- Bloc contenant les champs noms (prénom et nom) -->
-            <fieldset id="form-names" class="shopping-form--names--block form-group">
+            <fieldset
+              id="form-names"
+              class="shopping-form--names--block form-group"
+            >
               <div id="form-name" class="shopping-form--name--block">
-                <label for="lname">Nom  <mark class="important">*</mark></label>
+                <label for="lname">Nom <mark class="important">*</mark></label>
                 <input
                   type="text"
                   class="form-control"
@@ -144,7 +153,9 @@
               </div>
 
               <div id="form-surname" class="shopping-form--surname--block">
-                <label for="fname">Prénom  <mark class="important">*</mark></label>
+                <label for="fname"
+                  >Prénom <mark class="important">*</mark></label
+                >
                 <input
                   type="text"
                   class="form-control"
@@ -158,7 +169,7 @@
 
             <!-- Bloc contenant le champ email -->
             <fieldset id="form-email" class="shopping-form--email--block">
-              <label for="email">Email  <mark class="important">*</mark></label>
+              <label for="email">Email <mark class="important">*</mark></label>
               <input
                 type="email"
                 class="form-control"
@@ -175,7 +186,9 @@
               class="shopping-form--addresses--block form-group"
             >
               <div id="form-address" class="shopping-form--address--block">
-                <label for="address">Adresse  <mark class="important">*</mark></label>
+                <label for="address"
+                  >Adresse <mark class="important">*</mark></label
+                >
                 <input
                   type="text"
                   class="form-control"
@@ -203,7 +216,7 @@
               class="shopping-form--cityzip--block form-group"
             >
               <div id="form-city" class="shopping-form--city--block">
-                <label for="city">Ville  <mark class="important">*</mark></label>
+                <label for="city">Ville <mark class="important">*</mark></label>
                 <input
                   type="text"
                   class="form-control"
@@ -231,9 +244,8 @@
               <h3 class="shopping-form--payment--text">
                 Choisissez votre moyen de paiement
               </h3>
-              <article class="shopping-form--payment--block">
-                <label
-                  for="paypal"
+              <article class="shopping-form--payment--block" aria-label="Choix du moyen de paiement">
+                <div
                   class="shopping-form--payment--choice--block container-fluid"
                 >
                   <figure class="shopping-form--payment--choice--figure col">
@@ -251,13 +263,12 @@
                     id="paypal"
                     class="shopping-form--payment--choice--radio"
                     name="payment-method"
-                    value="credit-card"
+                    value="paypal"
                     aria-label="Bouton de sélection paypal"
                   />
-                </label>
+                </div>
 
-                <label
-                  for="credit-card"
+                <div
                   class="shopping-form--payment--choice--block container-fluid"
                 >
                   <figure class="shopping-form--payment--choice--figure col">
@@ -275,10 +286,10 @@
                     id="credit-card"
                     class="shopping-form--payment--choice--radio"
                     name="payment-method"
-                    value="paypal"
+                    value="credit-card"
                     aria-label="Bouton de sélection carte de crédit"
                   />
-                </label>
+                </div>
               </article>
             </div>
 
@@ -286,13 +297,20 @@
               id="submit"
               type="submit"
               name="submit"
-              class="btn-warning cart--buy-button shadow-sm btn btn-lg btn-block cta-hero">Commander</button>
-            
+              class="btn-warning cart--buy-button shadow-sm btn btn-lg btn-block cta-hero"
+            >
+              Commander
+            </button>
           </form>
         </aside>
       </section>
     </main>
 
+    <footer class="bg-dark">
+      <div class="text-center">
+        <p class="footer-text">Application proposée par Orinoco</p>
+      </div>
+    </footer>
     <!-- Scripts JS -->
     <script src="./js/cart.js"></script>
     <script>
@@ -302,12 +320,5 @@
       getItemsNumber();
     </script>
     <!-- Scripts JS END -->
-
-    <footer class="bg-dark">
-      <div class="text-center">
-        <h2></h2>
-        <p class="footer-text">Application proposée par Orinoco</p>
-      </div>
-    </footer>
   </body>
 </html>

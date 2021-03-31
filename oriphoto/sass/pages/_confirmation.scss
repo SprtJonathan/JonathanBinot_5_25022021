@@ -1,0 +1,29 @@
+.confirmation {
+  &--block {
+    animation: slide-up 1s both 120ms;
+    margin: auto;
+    margin-top: 2rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    background-color: whitesmoke;
+    border: 2px rgba($color: #000000, $alpha: 0.05) solid;
+    border-radius: 1rem;
+  }
+  &--goback {
+    margin: auto;
+    animation: slide-up 1s both 120ms;
+    &--text,
+    a {
+      text-decoration: none;
+      color: white;
+      font-family: $raleway-font;
+      font-size: 20px;
+      font-weight: 500;
+      border: 1px solid black;
+      padding: 1rem;
+      border-radius: 1rem;
+    }
+  }
+}

@@ -6,6 +6,50 @@
   font-weight: normal;
   font-style: normal;
 }
+/* Color variables */
+/* Animation variables */
+/* Keyframes de l'animation de disparition de l'écran de chargement */
+@keyframes loading-screen-anim {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    z-index: -1;
+  }
+}
+/* Keyframes de l'animation du spinner de chargement */
+@keyframes spinner-rotation {
+  0% {
+    transform: rotate(20deg);
+  }
+  90% {
+    transform: rotate(350deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/* Keyframes de l'animation de l'apparition progressive des articles */
+@keyframes slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Keyframes de l'animation du bouton retour à l'acceuil */
+@keyframes return-rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 html {
   overflow-x: hidden;
   width: 100vw;
@@ -16,8 +60,9 @@ body {
   width: 100vw;
 }
 
-main {
+main.index {
   margin-bottom: 150px;
+  animation: slide-up 1s both 550ms;
 }
 
 h1,
@@ -46,6 +91,62 @@ mark.important {
   font-weight: 500;
 }
 
+.spinner {
+  border: 15px solid #945EEC;
+  border-top-color: #E58A0A;
+}
+
+.loading-logo {
+  font-size: 35px;
+}
+
+/* Propriétés de l'écran de chargement (page d'accueil) */
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  z-index: 80;
+  background-color: white;
+  width: 100vw;
+  height: 100%;
+  top: 0px;
+  animation: loading-screen-anim 500ms 550ms both;
+}
+
+/* Propriétés du spinner de chargement (page d'accueil) */
+.spinner {
+  height: 10vw;
+  width: 10vw;
+  border: 5px solid #945EEC;
+  border-top-color: #E58A0A;
+  border-radius: 100%;
+  animation: spinner-rotation 0.7s infinite ease 0.25s;
+}
+
+.return-button {
+  position: fixed;
+  color: white;
+  top: 2rem;
+  left: 2rem;
+  background-color: rgba(85, 85, 85, 0.5);
+  border-radius: 50%;
+  padding: 0.65rem 1rem;
+  z-index: 20;
+}
+.return-button:hover {
+  animation: return-rotation 500ms;
+}
+.return-button a {
+  color: white;
+  text-decoration: none;
+}
+.return-button a:hover {
+  color: whitesmoke;
+}
+
 footer {
   position: fixed;
   bottom: 0;
@@ -56,6 +157,21 @@ footer {
   font-family: "belligerent_madnessregular";
 }
 
+/* Format d'écran de taille minimale de 1024px */
+@media (min-width: 1024px) {
+  #explore-restaurant {
+    padding: 50px;
+  }
+
+  .spinner {
+    border: 25px solid #945EEC;
+    border-top-color: #E58A0A;
+  }
+
+  .loading-logo {
+    font-size: 45px;
+  }
+}
 .shopping-cart-link {
   position: relative;
   display: flex;
@@ -182,6 +298,7 @@ footer {
   margin: auto;
   border: 0.2rem solid;
   border-radius: 2rem;
+  animation: slide-up 0.5s both;
 }
 .details--product-article {
   display: flex;
@@ -193,18 +310,20 @@ footer {
   margin: auto;
 }
 .details--product-details-aside {
-  width: auto;
-  padding: 2rem;
-  margin: auto;
+  width: 92vw;
+  padding: 2rem 1rem;
+  margin: 1rem 0px;
   height: 15rem;
+  animation: slide-up 0.5s both 100ms;
 }
 .details--product-buy-aside {
   display: flex;
   flex-direction: column;
-  width: auto;
+  width: 92vw;
   height: 15rem;
-  padding: 2rem;
+  padding: 2rem 1rem;
   margin: auto;
+  animation: slide-up 0.5s both 200ms;
 }
 .details--product-name {
   display: inline;
@@ -238,6 +357,10 @@ footer {
   text-align: center;
 }
 
+.product-main {
+  margin-bottom: 4rem;
+}
+
 @media (min-width: 1024px) {
   .details--product-article {
     flex-direction: row;
@@ -259,22 +382,28 @@ footer {
   display: flex;
   flex-direction: column;
   width: 100vw;
+  margin-bottom: 10rem;
 }
 .cart--section--title {
   color: #343a40;
   text-align: center;
+}
+.cart--section {
+  animation: slide-up 1s both;
 }
 .cart--section--checkout {
   display: flex;
   flex-direction: column;
   width: 100vw;
   padding: 5vw;
+  animation: slide-up 1s both 100ms;
 }
 .cart--section--recap-form {
   display: flex;
   flex-direction: column;
   width: 100vw;
   padding: 5vw;
+  animation: slide-up 1s both 200ms;
 }
 .cart--product-container {
   display: flex;
@@ -289,6 +418,7 @@ footer {
   background-color: whitesmoke;
   align-self: center;
   text-align: center;
+  animation: slide-up 1s both 350ms;
 }
 .cart--product-quantity--block {
   display: flex;
@@ -349,6 +479,7 @@ footer {
   width: 92vw;
   padding: 5vw;
   align-self: center;
+  animation: slide-up 1s both 300ms;
 }
 .cart--total h3 {
   font-size: 23px;
@@ -364,7 +495,13 @@ footer {
   display: flex;
   flex-direction: column;
 }
+.cart--buy-button {
+  margin-bottom: 1rem;
+}
 
+.shopping-form {
+  animation: slide-up 1s both 400ms;
+}
 .shopping-form--payment--block {
   display: flex;
   flex-direction: column;
@@ -444,6 +581,34 @@ footer {
     margin: 5px;
   }
 }
+.confirmation--block {
+  animation: slide-up 1s both 120ms;
+  margin: auto;
+  margin-top: 2rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  background-color: whitesmoke;
+  border: 2px rgba(0, 0, 0, 0.05) solid;
+  border-radius: 1rem;
+}
+.confirmation--goback {
+  margin: auto;
+  animation: slide-up 1s both 120ms;
+}
+.confirmation--goback--text,
+.confirmation--goback a {
+  text-decoration: none;
+  color: white;
+  font-family: "Raleway", sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  border: 1px solid black;
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
 /*!
  * Bootstrap v4.6.0 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors

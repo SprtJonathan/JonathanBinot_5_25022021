@@ -26,10 +26,10 @@ async function displayConfirmation() {
     orderIdText.setAttribute("id", "order--id--text");
     orderIdText.setAttribute("class", "order--id--text");
     orderIdText.textContent = "Commande N°" + orderId + " enregistrée";
-    recapSection.appendChild(orderIdText);
+    recapText.appendChild(orderIdText);
     let totalPriceElement = document.createElement("p");
     totalPriceElement.setAttribute("id", "order-total-price--text");
     totalPriceElement.setAttribute("class", "order--total-price--text");
     totalPriceElement.textContent = totalPriceText;
-    recapSection.appendChild(totalPriceElement);
+    recapText.appendChild(totalPriceElement);
 }

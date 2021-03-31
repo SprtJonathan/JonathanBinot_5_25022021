@@ -49,7 +49,7 @@
     <header class="bg-dark">
       <div class="container">
         <div class="row">
-          <nav class="col navbar navbar-expand-lg navbar-dark">
+          <nav id="navbar" class="col navbar navbar-expand-lg navbar-dark">
             <a class="navbar-brand" href="index.html"
               ><img
                 src="./images/logo/oriphoto_logo_light.png"
@@ -62,7 +62,7 @@
               type="button"
               data-toggle="collapse"
               data-target="#navbarContent"
-              aria-controls="navbarSupportedContent"
+              aria-controls="navbar"
               aria-expanded="false"
               aria-label="Toggle navigation"
             >
@@ -105,12 +105,17 @@
       </div>
     </header>
 
-    <section class="card product-page-title shadow">
-      <h2 class="choice-title">Votre choix</h2>
-      <h2 id="product-name"></h2>
+    <div class="return-button">
+      <a href="./index.html" class="stretched-link">
+        <i class="fas fa-arrow-left"></i>
+      </a>
+    </div>
+
+    <section id="choice-name-section" class="card product-page-title shadow">
+      <h2 id="choice-text" class="choice-title">Votre choix</h2>
     </section>
 
-    <main id="product-details-main" class="">
+    <main id="product-details-main" class="product-main">
       <div id="error">
         <div class="loading"></div>
         <p class="error">
@@ -122,19 +127,17 @@
 
     <footer class="bg-dark">
       <div class="text-center">
-        <h2></h2>
         <p class="footer-text">Application proposée par Orinoco</p>
       </div>
     </footer>
+    <!-- Scripts JS -->
+    <script src="./js/product.js"></script>
+    <script>
+      productDetailPage();
+    </script>
+    <script>
+      getItemsNumber();
+    </script>
+    <!-- Scripts JS END -->
   </body>
-
-  <!-- Scripts JS -->
-  <script src="./js/product.js"></script>
-  <script>
-    productDetailPage();
-  </script>
-  <script>
-    getItemsNumber();
-  </script>
-  <!-- Scripts JS END -->
 </html>

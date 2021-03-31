@@ -65,6 +65,7 @@ async function productsLibrary() {
         let productImage = document.createElement("img");
         productImage.setAttribute("class", "product-img");
         productImage.setAttribute("src", product.imageUrl);
+        productImage.setAttribute("alt", "Illustration produit");
 
         // Légende de l'image
         let productFigcaption = document.createElement("figcaption");

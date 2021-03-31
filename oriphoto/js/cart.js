@@ -521,9 +521,9 @@ async function displayShoppingCart() {
         sendForm(orderData, orderUrl);
         console.log(orderData);
         //Une fois la commande faite, vidage des valeurs enregistrées et du local storage
-        //contact = {};
-        //products = [];
-        //localStorage.clear();
+        contact = {};
+        products = [];
+        localStorage.clear();
       }
       console.log(formBoolean);
     });
