@@ -18,6 +18,7 @@ let orderId = pageUrl.searchParams.get("id");
 let totalPrice = pageUrl.searchParams.get("total");
 totalPriceText = "Total payé: " + parseFloat(totalPrice).toFixed(2) + "€";
 
+// Fonction permettant d'afficher les informations de la confirmation de commande
 async function displayConfirmation() {
     let recapText = document.getElementById("recap-text");
     let orderIdText = document.createElement("p");
