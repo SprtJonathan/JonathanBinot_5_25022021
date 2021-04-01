@@ -19,8 +19,6 @@ let totalPrice = pageUrl.searchParams.get("total");
 totalPriceText = "Total payé: " + parseFloat(totalPrice).toFixed(2) + "€";
 
 async function displayConfirmation() {
-    const main = document.getElementById("main");
-    let recapSection = document.getElementById("confirmation-container");
     let recapText = document.getElementById("recap-text");
     let orderIdText = document.createElement("p");
     orderIdText.setAttribute("id", "order--id--text");
