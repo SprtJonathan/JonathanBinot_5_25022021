@@ -78,7 +78,7 @@ async function displayShoppingCart() {
 
     // Structure de chaque article
     for (let i = 0; i < shoppingCart.length; i++) {
-      // Enregistrement de l'ID des produits dans le tableau produits qui sera renvoyé à l'API
+      // Enregistrement de l'ID des produits dans le tableau produits qui sera renvoyé à l'API pour la commande
       products.push(shoppingCart[i].id);
       // Container contenant les informations de l'article
       let productContainer = document.createElement("article");
