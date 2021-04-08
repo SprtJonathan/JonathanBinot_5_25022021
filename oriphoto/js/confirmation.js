@@ -13,8 +13,8 @@ if (localStorage.getItem(cartId)) {
 }
 
 // Définition des variables
-let pageUrl = new URL(document.location.href);
-let orderId = pageUrl.searchParams.get("id");
+let pageUrl = new URL(document.location.href); // Permet de récupérer l'URL de la page
+let orderId = pageUrl.searchParams.get("id"); // Récupère les informations de l'URL à partir de l'id défini précédemment
 let customerFName = pageUrl.searchParams.get("firstName");
 let customerLName = pageUrl.searchParams.get("lastName");
 let totalPrice = pageUrl.searchParams.get("total");

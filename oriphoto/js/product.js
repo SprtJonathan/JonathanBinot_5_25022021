@@ -110,6 +110,7 @@ async function productDetailPage() {
   selectedProductSelect.setAttribute("class", "details--product-options");
   selectedProductSelect.setAttribute("onChange", "selectionChange(this);");
 
+  // Fonction permettant de changer la valeur de la sélection
   selectionChange = function (select) {
     let selection = select.options[select.selectedIndex].text;
     // Si l'index du select est 0 alors la réponse sera invalide

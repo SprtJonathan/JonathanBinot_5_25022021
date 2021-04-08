@@ -34,6 +34,7 @@
     background-color: whitesmoke;
     padding: 2rem;
     margin: auto;
+    align-content: center;
   }
   &--product-details-aside {
     width: 92vw;
@@ -88,7 +89,7 @@
   margin-bottom: 4rem;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1280px) {
   .details {
     &--product-article {
       flex-direction: row;

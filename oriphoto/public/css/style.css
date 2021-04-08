@@ -310,6 +310,7 @@ footer {
   background-color: whitesmoke;
   padding: 2rem;
   margin: auto;
+  align-content: center;
 }
 .details--product-details-aside {
   width: 92vw;
@@ -363,7 +364,7 @@ footer {
   margin-bottom: 4rem;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1280px) {
   .details--product-article {
     flex-direction: row;
   }
