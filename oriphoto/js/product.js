@@ -1,6 +1,8 @@
 // Définitions de variables permettant de rendre le code plus modulaire
 const soldProduct = "cameras"; // Passage du produit vendu en variable afin de pouvoir facilement modifier sa valeur
-const apiUrl = "https://ab-p5-api.herokuapp.com/api/" + soldProduct + "/"; // Lien vers l'API du type de produit vendu
+const apiUrl = "http://localhost:3000/api/" + soldProduct + "/"; // Lien vers l'API du type de produit vendu 
+//const apiUrl = "https://ab-p5-api.herokuapp.com/api/" + soldProduct + "/"; // Lien vers l'API du type de produit vendu 
+//(ce dernier URL était utilisé car le 08/04/2021 la BDD originale ne pouvait plus être jointe)
 
 // Déclaration des variables du panier
 const cartId = "userShoppingCart"; // Nom du panier qui sera ajouté au localStorage
@@ -205,6 +207,7 @@ async function productDetailPage() {
   });
 }
 
+// Fonction permettant d'ajouter l'article au panier
 async function addToCart() {
   let addToCartButton = document.getElementById("add-to-cart-button");
   addToCartButton.addEventListener("click", buyItem());
@@ -229,6 +232,7 @@ async function addToCart() {
     let itemOption = select.value; // Valeur de l'option choisie
     let itemCount = quantity.value; // Valeur de l'option choisie
 
+    // Création de l'objet de l'article ajouté au panier
     let selectedItem = {
       image: itemImage,
       name: itemName,

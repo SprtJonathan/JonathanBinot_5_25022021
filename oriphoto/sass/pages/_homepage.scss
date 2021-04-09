@@ -1,3 +1,5 @@
+// Style de la page d'accueil
+
 .shopping-cart-link {
   position: relative;
   display: flex;
@@ -61,6 +63,7 @@ footer {
   padding: 25px;
 }
 
+// Propriétés pour les tailles d'écran de minimum 1024px
 @media (min-width: 1024px) {
   h1 {
     font-size: 5rem;

@@ -42,7 +42,7 @@
       crossorigin="anonymous"
     ></script>
 
-    <title>Votre panier</title>
+    <title>Panier</title>
   </head>
 
   <body>
@@ -114,9 +114,10 @@
       <h1 class="choice-title">Mon panier</h1>
     </section>
 
+    <!-- Bloc principal dans lequel les éléments de la page seront affichés -->
     <main id="cart-main" class="cart">
       <div id="empty-cart">
-        <div class="loading"></div>
+        <!-- Texte par défaut qui sera supprimé si au moins un article se trouve dans le panier -->
         <p class="empty-cart">Votre panier est vide</p>
       </div>
 
@@ -228,7 +229,7 @@
               </div>
 
               <div id="form-zipcode" class="shopping-form--zipcode--block">
-                <label for="zipcode">Code Postal</label>
+                <label for="zipcode">Code Postal <mark class="important">*</mark></label>
                 <input
                   type="text"
                   class="form-control"
@@ -264,7 +265,9 @@
         <p class="footer-text">Application proposée par Orinoco</p>
       </div>
     </footer>
+
     <!-- Scripts JS -->
+
     <script src="./js/cart.js"></script>
     <script>
       displayShoppingCart();
@@ -272,6 +275,7 @@
     <script>
       getItemsNumber();
     </script>
+
     <!-- Scripts JS END -->
   </body>
 </html>

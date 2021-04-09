@@ -1,6 +1,8 @@
 // Définitions de variables permettant de rendre le code plus modulaire
 const soldProduct = "cameras"; // Passage du produit vendu en variable afin de pouvoir facilement modifier sa valeur
-const apiUrl = "https://ab-p5-api.herokuapp.com/api/" + soldProduct + "/"; // Lien vers l'API du type de produit vendu
+const apiUrl = "http://localhost:3000/api/" + soldProduct + "/"; // Lien vers l'API du type de produit vendu 
+//const apiUrl = "https://ab-p5-api.herokuapp.com/api/" + soldProduct + "/"; // Lien vers l'API du type de produit vendu 
+//(ce dernier URL était utilisé car le 08/04/2021 la BDD originale ne pouvait plus être jointe)
 
 // Variables pour la confirmation et commande par l'envoi des données précéemment collectées
 const orderUrl = apiUrl + "order" + "/";
@@ -198,7 +200,7 @@ async function displayShoppingCart() {
 
       // Bouton pour dimminuer la quantité d'un même produit
       // On récupère la quantité de l'article "en cours", et on décrémente sa valeur
-      // Puis on stocke la nouvelle valeur dans un objet qu'on renvoie au localStorage
+      // Puis on stocke la nouvelle valeur dans un objet que l'on renvoie au localStorage
       // à la position initiale de l'article
       buttonQtLess.addEventListener("click", function (event) {
         event.preventDefault();
@@ -325,12 +327,13 @@ async function displayShoppingCart() {
     let formBoolean = false;
     // Fonction permettant de vérifier les champs du formulaire
     async function verifyForm() {
-      // Vérification des caractères
-      let verifyLetters = /[A-Za-z]/;
-      let verifyNumbers = /[0-9]/;
-      let verifyEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      let verifyCharacters = /[?":{}|<>]/;
+      // Vérification des caractères via des regex
+      let verifyLetters = /[A-Za-z]/; // Vérification des lettres uniquement
+      let verifyNumbers = /[0-9]/; // Vérification des chiffres uniquement
+      let verifyEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // Vérification de l'email
+      let verifyCharacters = /[?":{}|<>]/; // Vérification des caractères spéciaux
 
+      // Création de variables pour l'affichage des erreurs
       let formErrorHTML =
         "<div id='form-alert'><div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>";
       let badValue = "Format incorrect:";
@@ -339,7 +342,7 @@ async function displayShoppingCart() {
       let badValueChar = " - Caractères spéciaux interdits";
       let badValueEmail = " Format d'email non autorisé:";
 
-      // Récupération des inputs
+      // Création des variables des champs
       let lnameId = document.getElementById("lname");
       let fnameId = document.getElementById("fname");
       let emailId = document.getElementById("email");
@@ -348,6 +351,7 @@ async function displayShoppingCart() {
       let cityId = document.getElementById("city");
       let zipcodeId = document.getElementById("zipcode");
 
+      // Récupération des inputs
       let lname = lnameId.value;
       let fname = fnameId.value;
       let email = emailId.value;
@@ -369,10 +373,10 @@ async function displayShoppingCart() {
         returnMessage = lnameId.insertAdjacentHTML(
           "afterend",
           formErrorHTML +
-            badValue +
-            badValueFigure +
-            badValueChar +
-            "</strong></div></div>"
+          badValue +
+          badValueFigure +
+          badValueChar +
+          "</strong></div></div>"
         );
         console.log("erreur" + lname);
       } else {
@@ -388,10 +392,10 @@ async function displayShoppingCart() {
         returnMessage = fnameId.insertAdjacentHTML(
           "afterend",
           formErrorHTML +
-            badValue +
-            badValueFigure +
-            badValueChar +
-            "</strong></div></div>"
+          badValue +
+          badValueFigure +
+          badValueChar +
+          "</strong></div></div>"
         );
       } else {
         console.log("Prénom validé");
@@ -427,6 +431,8 @@ async function displayShoppingCart() {
         console.log("Complément d'adresse validé");
       }
 
+      let address2string = ", " + address2; // Cette variable permet d'ajouter l'adresse secondaire dans le membre adresse (l'objet envoyé à l'api ayant une structure définie)
+
       // Ville
       if (
         verifyNumbers.test(city) == true ||
@@ -436,10 +442,10 @@ async function displayShoppingCart() {
         returnMessage = cityId.insertAdjacentHTML(
           "afterend",
           formErrorHTML +
-            badValue +
-            badValueFigure +
-            badValueChar +
-            "</strong></div></div>"
+          badValue +
+          badValueFigure +
+          badValueChar +
+          "</strong></div></div>"
         );
       } else {
         console.log("Format ville validé");
@@ -454,10 +460,10 @@ async function displayShoppingCart() {
         returnMessage = zipcodeId.insertAdjacentHTML(
           "afterend",
           formErrorHTML +
-            badValue +
-            badValueLetter +
-            badValueChar +
-            "</strong></div></div>"
+          badValue +
+          badValueLetter +
+          badValueChar +
+          "</strong></div></div>"
         );
       } else {
         console.log("Format code postal validé");
@@ -467,57 +473,56 @@ async function displayShoppingCart() {
       // alors le formulaire est validé et on peut enregistrer
       // les informations client dans un nouvel objet
 
-      let address2string = ", " + address2;
-
       if (returnMessage != "") {
         shoppingForm.insertAdjacentHTML(
           "afterend",
           formErrorHTML +
-            "Erreur: Des erreurs sont présentes dans le formulaire, veuillez les corriger" +
-            "<br>" +
-            "</strong></div></div>"
+          "Erreur: Des erreurs sont présentes dans le formulaire, veuillez les corriger" +
+          "<br>" +
+          "</strong></div></div>"
         );
-        formBoolean = false;
+        formBoolean = false; // Si des erreurs sont retournées alors on définit la variable comme fausse pour que le formulaire ne puisse pas être envoyé
       } else {
         // Construction de l'objet contenant les infos du client
         contact = {
           firstName: fname,
           lastName: lname,
           email: email,
-          address: address + address2string,
-          city: city + ", " + zipcode,
+          address: address + address2string, // L'adresse secondaire est ici ajoutée à la principale pour plus d'exactitude lors de la commande
+          city: city + ", " + zipcode, // Le code postal est ici ajouté après la ville afin que la localisation soit plus précise
         };
         console.log("formulaire validé");
-        formBoolean = true;
+        formBoolean = true; // Si aucune erreur n'est retournée alors on définit la variable comme vraie pour que le formulaire ne puisse pas être envoyé
       }
     }
 
     // Déclaration des variables de la commande
+    // Variable permettant de récupérer les informations de contact de l'utilisateur
     let contact;
     // Bouton d'achat
     let formSubmit = document.getElementById("shopping-form");
     let orderButton = document.getElementById("submit");
-    orderButton.textContent = "Commander " + totalQuantity + " articles";
+    orderButton.textContent = "Commander " + totalQuantity + " articles"; // Affichage du nombre d'articles de la commande
     formSubmit.addEventListener("submit", (event) => {
       event.preventDefault();
-      verifyForm(contact);
+      verifyForm(contact); // Vérification du formulaire avant l'envoi
       console.log(contact);
-      if (formBoolean == true) {
+      if (formBoolean == true) { // Vérification de la variable booléenne définie précédemment
         shoppingForm.insertAdjacentHTML(
           "afterend",
           "<div id='form-alert'><div class='alert alert-primary'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button><strong>" +
-            "Formulaire valide" +
-            "</strong></div></div>"
-        );
+          "Formulaire valide" +
+          "</strong></div></div>"
+        ); // Si vrai, alors on affiche un message de confirmation pour la validation du formulaire
         console.log(products);
         let orderDataObject = {
           contact,
           products,
-        };
+        }; // On crée un objet contenant les données qui seront envoyées à l'API
         let orderData = JSON.stringify(orderDataObject);
-        sendForm(orderData, orderUrl);
+        sendForm(orderData, orderUrl); // Envoi des données à l'API
         console.log(orderData);
-        //Une fois la commande faite, vidage des valeurs enregistrées et du local storage
+        // Une fois la commande faite, vidage des valeurs enregistrées et du local storage
         contact = {};
         products = [];
         localStorage.clear();
@@ -525,7 +530,7 @@ async function displayShoppingCart() {
       console.log(formBoolean);
     });
 
-    // Appel de l'API pour l'envoi des informations grâce à fetch
+    // Envoi à l'API des informations grâce à fetch
     async function sendForm(orderData, orderUrl) {
       const formResponse = await fetch(orderUrl, {
         method: "POST",
@@ -538,22 +543,23 @@ async function displayShoppingCart() {
 
       let responseId = await formResponse.json();
 
+      // Si la réponse de l'api est valide alors on récupère les information de commande et on les ajoute à l'URL de la page de confirmation avant d'y être redirigé
       if (formResponse.status < 300 && formResponse.status >= 200) {
         let parsedData = JSON.parse(orderData);
         console.log(formResponse.status);
         console.log("API reached. Code " + formResponse.status);
         document.location.assign(
           "./confirmation.html?id=" +
-            responseId.orderId +
-            "&total=" +
-            totalPrice +
-            "&firstName=" +
-            parsedData.contact.firstName +
-            "&lastName=" +
-            parsedData.contact.lastName
+          responseId.orderId +
+          "&total=" +
+          totalPrice +
+          "&firstName=" +
+          parsedData.contact.firstName +
+          "&lastName=" +
+          parsedData.contact.lastName
         );
       } else {
-        alert("Une erreur s'est produite, veuillez réessayer ultérieurement.");
+        alert("Une erreur s'est produite, veuillez réessayer ultérieurement."); // Sinon on renvoie une alerte au navigateur
       }
     }
     // Si le panier est vide, alors on supprime le formulaire

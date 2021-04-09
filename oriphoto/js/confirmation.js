@@ -1,3 +1,4 @@
+// Initialiser le panier n'est pas réellement nécessaire (il n'est pas affiché sur cette page), cependant ceci permet d'éviter d'éventuelles erreurs.
 // Déclaration des variables du panier pour l'initialiser
 const cartId = "userShoppingCart"; // Nom du panier qui sera ajouté au localStorage
 let shoppingCart = JSON.parse(localStorage.getItem(cartId)); // Tableau contenant les éléments ajoutés au panier
@@ -26,7 +27,7 @@ async function displayConfirmation() {
     let orderIdText = document.createElement("p");
     orderIdText.setAttribute("id", "order-id-text");
     orderIdText.setAttribute("class", "order--id--text");
-    orderIdText.innerHTML = "Commande N°" + orderId + "</br>" + " au nom de " + customerFName + " " + customerLName + " enregistrée";
+    orderIdText.innerHTML = "Commande N°" + orderId + "</br>" + " au nom de " + customerFName + " " + customerLName + " confirmée";
     recapText.appendChild(orderIdText);
     let totalPriceElement = document.createElement("p");
     totalPriceElement.setAttribute("id", "order-total-price-text");

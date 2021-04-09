@@ -1,6 +1,8 @@
 // Définitions de variables permettant de rendre le code plus modulaire
 const soldProduct = "cameras"; // Passage du produit vendu en variable afin de pouvoir facilement modifier sa valeur
-const apiUrl = "https://ab-p5-api.herokuapp.com/api/" + soldProduct + "/"; // Lien vers l'API du type de produit vendu
+const apiUrl = "http://localhost:3000/api/" + soldProduct + "/"; // Lien vers l'API du type de produit vendu 
+//const apiUrl = "https://ab-p5-api.herokuapp.com/api/" + soldProduct + "/"; // Lien vers l'API du type de produit vendu 
+//(ce dernier URL était utilisé car le 08/04/2021 la BDD originale ne pouvait plus être jointe)
 
 // Déclaration des variables du panier
 const cartId = "userShoppingCart"; // Nom du panier qui sera ajouté au localStorage
@@ -8,13 +10,13 @@ let shoppingCart = JSON.parse(localStorage.getItem(cartId)); // Tableau contenan
 
 function getItemsNumber() {
   // Ajout de l'affichage du nombre d'éléments dans le panier
-  // Vérification que le localStorage soit initialisée pour éviter les erreurs
+  // Vérification que le localStorage soit initialisé pour éviter les erreurs
   if (localStorage.getItem(cartId)) {
     console.log(shoppingCart);
   } else {
     console.log("Le panier va être initalisé");
     shoppingCart = [];
-    localStorage.setItem(cartId, JSON.stringify(shoppingCart));
+    localStorage.setItem(cartId, JSON.stringify(shoppingCart)); // On stocke le panier dans le localStorage
   }
   let cartItemsNumber = shoppingCart.length; // Nombre d'articles dans le panier
   let cartNumber = document.getElementById("shopping-cart-number"); // Nombre d'articles dans le panier
@@ -33,7 +35,7 @@ async function getProductsInfo() {
   console.log("API reached. Code " + response.status);
   error = document.getElementById("error");
   if (error) {
-    error.remove();
+    error.remove(); // On supprime le bloc erreur si l'appel a fonctionné
   }
   return fetchedProducts;
 }
