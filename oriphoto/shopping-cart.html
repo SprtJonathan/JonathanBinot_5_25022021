@@ -172,7 +172,7 @@
             <fieldset id="form-email" class="shopping-form--email--block">
               <label for="email">Email <mark class="important">*</mark></label>
               <input
-                type="email"
+                type="text"
                 class="form-control"
                 name="email"
                 id="email"
@@ -229,7 +229,9 @@
               </div>
 
               <div id="form-zipcode" class="shopping-form--zipcode--block">
-                <label for="zipcode">Code Postal <mark class="important">*</mark></label>
+                <label for="zipcode"
+                  >Code Postal <mark class="important">*</mark></label
+                >
                 <input
                   type="text"
                   class="form-control"
@@ -268,12 +270,13 @@
 
     <!-- Scripts JS -->
 
+    <script src="./js/helpers.js"></script>    
+    <script>
+      getItemsNumber();
+    </script>
     <script src="./js/cart.js"></script>
     <script>
       displayShoppingCart();
-    </script>
-    <script>
-      getItemsNumber();
     </script>
 
     <!-- Scripts JS END -->

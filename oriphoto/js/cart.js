@@ -10,25 +10,6 @@ const orderUrl = apiUrl + "order" + "/";
 // Création du tableau contenant la commande
 let products = [];
 
-// Déclaration des variables du panier
-const cartId = "userShoppingCart"; // Nom du panier qui sera ajouté au localStorage
-let shoppingCart = JSON.parse(localStorage.getItem(cartId)); // Tableau contenant les éléments ajoutés au panier
-
-function getItemsNumber() {
-  // Ajout de l'affichage du nombre d'éléments dans le panier
-  // Vérification que le localStorage soit initialisée pour éviter les erreurs
-  if (localStorage.getItem(cartId)) {
-    console.log(shoppingCart);
-  } else {
-    console.log("Le panier va être initalisé");
-    shoppingCart = [];
-    localStorage.setItem(cartId, JSON.stringify(shoppingCart));
-  }
-  let cartItemsNumber = shoppingCart.length; // Nombre d'articles dans le panier
-  let cartNumber = document.getElementById("shopping-cart-number"); // Nombre d'articles dans le panier
-  cartNumber.textContent = cartItemsNumber;
-}
-
 console.log(shoppingCart);
 
 async function displayShoppingCart() {
@@ -44,30 +25,19 @@ async function displayShoppingCart() {
 
     // Création de l'interface du panier
 
-    let cartCheckout = document.createElement("section");
-    cartCheckout.setAttribute("id", "cart-checkout");
-    cartCheckout.setAttribute(
-      "class",
-      "card cart--section cart--section--checkout"
-    );
+    let cartCheckout = createDomElement("section", ["id", "class"], ["cart-checkout", "card cart--section cart--section--checkout"]);
 
-    let itemsSectionTitle = document.createElement("h3");
-    itemsSectionTitle.setAttribute("id", "cart-checkout-title");
-    itemsSectionTitle.setAttribute("class", "cart--section--title");
+    let itemsSectionTitle = createDomElement("h3", ["id", "class"], ["cart-checkout-title", "cart--section--title"]);
     itemsSectionTitle.textContent = "Articles sélectionnés";
 
     let cartTotal = document.getElementById("cart-total");
 
-    let recapSectionTitle = document.createElement("h3");
-    recapSectionTitle.setAttribute("id", "cart-total-title");
-    recapSectionTitle.setAttribute("class", "cart--section--title");
+    let recapSectionTitle = createDomElement("h3", ["id", "class"], ["cart-total-title", "cart--section--title"]);
     recapSectionTitle.textContent = "Récapitulatif de commande";
 
     let cartForm = document.getElementById("cart-form");
 
-    let formSectionTitle = document.createElement("h3");
-    formSectionTitle.setAttribute("id", "cart-form-title");
-    formSectionTitle.setAttribute("class", "cart--section--title");
+    let formSectionTitle = createDomElement("h3", ["id", "class"], ["cart-form-title", "cart--section--title"]);
     formSectionTitle.textContent = "Coordonnées";
 
     main.appendChild(cartCheckout);
@@ -83,91 +53,49 @@ async function displayShoppingCart() {
       // Enregistrement de l'ID des produits dans le tableau produits qui sera renvoyé à l'API pour la commande
       products.push(shoppingCart[i].id);
       // Container contenant les informations de l'article
-      let productContainer = document.createElement("article");
-      productContainer.setAttribute(
-        "class",
-        "cart--product-container shadow-sm"
-      );
+      let productContainer = createDomElement("article", ["class"], ["cart--product-container shadow-sm"]);
 
       // Bloc de l'image
-      let productImgContainer = document.createElement("aside");
-      productImgContainer.setAttribute("class", "cart--product-img--block");
+      let productImgContainer = createDomElement("aside", ["class"], ["cart--product-img--block"]);
 
-      let productImg = document.createElement("img");
-      productImg.setAttribute("class", "cart--product-img");
-      productImg.setAttribute("src", shoppingCart[i].image);
+      let productImg = createDomElement("img", ["class", "src"], ["cart--product-img", shoppingCart[i].image]);
 
       // Bloc contenant le nom et l'option de l'article
-      let productNameContainer = document.createElement("aside");
-      productNameContainer.setAttribute("class", "cart--product-name-aside");
+      let productNameContainer = createDomElement("aside", ["class"], ["cart--product-name--block"]);
 
       // Nom de l'article
-      let productName = document.createElement("h3");
-      productName.setAttribute("class", "cart--product-name" + [i]);
+      let productName = createDomElement("h3", ["class"], ["cart--product-name" + [i]]);
       productName.textContent = shoppingCart[i].name;
 
       // Option sélectionnée
-      let productOption = document.createElement("h5");
-      productOption.setAttribute("class", "cart--product-option" + [i]);
+      let productOption = createDomElement("h5", ["class"], ["cart--product-option" + [i]]);
       productOption.textContent =
         "Option sélectionnée: " + shoppingCart[i].options;
 
       // Bloc contenant les chiffres de l'article choisi
-      let productFiguresContainer = document.createElement("aside");
-      productFiguresContainer.setAttribute(
-        "class",
-        "cart--product-figures--block"
-      );
+      let productFiguresContainer = createDomElement("aside", ["class"], ["cart--product-figures--block"]);
 
       // Bloc contenant la quantité d'articles d'un même objet et les boutons + et -
-      let productQuantityBlock = document.createElement("div");
-      productQuantityBlock.setAttribute(
-        "class",
-        "cart--product-quantity--block"
-      );
+      let productQuantityBlock = createDomElement("div", ["class"], ["cart--product-quantity--block"]);
 
       // Bouton servant à réduire la quantité d'articles
-      let productQuantityLess = document.createElement("a");
-      productQuantityLess.setAttribute(
-        "class",
-        "cart--product-quantity--modifier--minus btn btn-secondary"
-      );
-      productQuantityLess.setAttribute("id", "button-less--" + [i]);
-      productQuantityLess.setAttribute("href", "");
-      productQuantityLess.textContent = "";
+      let productQuantityLess = createDomElement("a", ["class", "id", "href"], ["cart--product-quantity--modifier--minus btn btn-secondary", "button-less--" + [i], ""]);
 
       // Texte indiquant la quantité d'un même article
-      let productQuantity = document.createElement("h4");
-      productQuantity.setAttribute("class", "cart--product-quantity--number");
+      let productQuantity = createDomElement("h4", ["class"], ["cart--product-quantity--number"]);
       productQuantity.textContent = "Quantité: " + shoppingCart[i].quantity;
 
       // Bouton servant à augmenter la quantité d'articles
-      let productQuantityMore = document.createElement("a");
-      productQuantityMore.setAttribute(
-        "class",
-        "cart--product-quantity--modifier--plus btn btn-primary"
-      );
-      productQuantityMore.setAttribute("id", "button-more--" + [i]);
-      productQuantityLess.setAttribute("href", "");
-      productQuantityMore.textContent = "";
+      let productQuantityMore = createDomElement("a", ["class", "id", "href"], ["cart--product-quantity--modifier--plus btn btn-primary", "button-more--" + [i], ""]);
 
       // Bouton contenant le prix du produit
-      let productPrice = document.createElement("h3");
-      productPrice.setAttribute("class", "cart--product-price");
+      let productPrice = createDomElement("h3", ["class"], ["cart--product-price"]);
 
       // Bloc contenant le bouton servant à retirer un article du panier
-      let removeProduct = document.createElement("div");
-      removeProduct.setAttribute("id", "delete-product-block");
-      removeProduct.setAttribute(
-        "class",
-        "cart--product-remove btn btn-danger"
-      );
+      let removeProduct = createDomElement("div", ["id", "class"], ["delete-product-block", "cart--product-remove btn btn-danger"]);
 
       // Bouton servant à retirer un article du panier
-      removeProductCross = document.createElement("a");
-      removeProductCross.setAttribute("class", "cart--product-remove--cross");
-      removeProductCross.setAttribute("id", "delete-product--" + [i]);
-      removeProductCross.setAttribute("href", "");
+      removeProductCross = createDomElement("a", ["class", "id", "href"], ["cart--product-remove--cross", "delete-product--" + [i], ""]);
       removeProductCross.textContent = "X";
 
       // Organisation de chacun des éléments précédemment créés
@@ -276,24 +204,15 @@ async function displayShoppingCart() {
     }
 
     // Création du total d'articles et du prix total
-    let cartNumberOfProducts = document.createElement("article");
-    cartNumberOfProducts.setAttribute("class", "cart--total--items--block");
+    let cartNumberOfProducts = createDomElement("article", ["class"], ["cart--total--items--block"]);
 
-    let cartNumbersBlock = document.createElement("div");
-    cartNumbersBlock.setAttribute("id", "recap-number");
-    cartNumbersBlock.setAttribute("class", "cart--total--items shadow-sm");
+    let cartNumbersBlock = createDomElement("div", ["id", "class"], ["recap-number", "cart--total--items shadow-sm"]);
 
-    let numberOfItems = document.createElement("h3");
-    numberOfItems.setAttribute("id", "total-items-number");
-    numberOfItems.setAttribute("class", "cart--total--items--number");
+    let numberOfItems = createDomElement("h3", ["id", "class"], ["total-items-number", "cart--total--items--number"]);
 
-    let cartTotalPrice = document.createElement("article");
-    cartTotalPrice.setAttribute("id", "total-items-price");
-    cartTotalPrice.setAttribute("class", "cart--total--items--block");
+    let cartTotalPrice = createDomElement("article", ["id", "class"], ["total-items-price", "cart--total--items--block"]);
 
-    let cartPrice = document.createElement("h3");
-    cartPrice.setAttribute("id", "total-price");
-    cartPrice.setAttribute("class", "cart--total--items--price");
+    let cartPrice = createDomElement("h3", ["id", "class"], ["total-price", "cart--total--items--price"]);
 
     // Calcul de la somme totale à payer
     let totalPrice = 0;
@@ -331,7 +250,7 @@ async function displayShoppingCart() {
       let verifyLetters = /[A-Za-z]/; // Vérification des lettres uniquement
       let verifyNumbers = /[0-9]/; // Vérification des chiffres uniquement
       let verifyEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // Vérification de l'email
-      let verifyCharacters = /[?":{}|<>]/; // Vérification des caractères spéciaux
+      let verifyCharacters = /[*?":{}|<>]/; // Vérification des caractères spéciaux
 
       // Création de variables pour l'affichage des erreurs
       let formErrorHTML =
@@ -360,127 +279,33 @@ async function displayShoppingCart() {
       let city = cityId.value;
       let zipcode = zipcodeId.value;
 
-      // Message de retour des contrôles
-      let returnMessage = "";
-
       // Vérification de la validité des différents inputs
       // Nom de famille
-      if (
-        verifyNumbers.test(lname) == true ||
-        verifyCharacters.test(lname) == true ||
-        lname == ""
-      ) {
-        returnMessage = lnameId.insertAdjacentHTML(
-          "afterend",
-          formErrorHTML +
-          badValue +
-          badValueFigure +
-          badValueChar +
-          "</strong></div></div>"
-        );
-        console.log("erreur" + lname);
-      } else {
-        console.log("Nom validé" + lname);
-      }
+      let lnameCheck = checkFormInput(verifyNumbers.test(lname) | verifyCharacters.test(lname), true, lname, lnameId, formErrorHTML + badValue + badValueFigure + badValueChar);
 
       // Prénom
-      if (
-        verifyNumbers.test(fname) == true ||
-        verifyCharacters.test(fname) == true ||
-        fname == ""
-      ) {
-        returnMessage = fnameId.insertAdjacentHTML(
-          "afterend",
-          formErrorHTML +
-          badValue +
-          badValueFigure +
-          badValueChar +
-          "</strong></div></div>"
-        );
-      } else {
-        console.log("Prénom validé");
-      }
+      let fnameCheck = checkFormInput(verifyNumbers.test(fname) | verifyCharacters.test(fname), true, fname, fnameId, formErrorHTML + badValue + badValueFigure + badValueChar);
 
       // Email
-      if (verifyEmail.test(email) == false || email == "") {
-        returnMessage = emailId.insertAdjacentHTML(
-          "afterend",
-          formErrorHTML + badValueEmail + badValueChar + "</strong></div></div>"
-        );
-      } else {
-        console.log("Format d'Email validé");
-      }
+      let emailCheck = checkFormInput(verifyEmail.test(email), false, email, emailId, formErrorHTML + badValueEmail + badValueChar);
 
       // Adresse
-      if (verifyCharacters.test(address) == true || address == "") {
-        returnMessage = addressId.insertAdjacentHTML(
-          "afterend",
-          formErrorHTML + badValue + badValueChar + "</strong></div></div>"
-        );
-      } else {
-        console.log("Format d'adresse validé");
-      }
+      let addressCheck = checkFormInput(verifyCharacters.test(address), true, address, addressId, formErrorHTML + badValue + badValueChar);
 
       // Complément d'adresse
-      if (verifyCharacters.test(address2) == true) {
-        returnMessage = address2Id.insertAdjacentHTML(
-          "afterend",
-          formErrorHTML + badValue + badValueChar + "</strong></div></div>"
-        );
-      } else {
-        console.log("Complément d'adresse validé");
-      }
-
-      let address2string = ", " + address2; // Cette variable permet d'ajouter l'adresse secondaire dans le membre adresse (l'objet envoyé à l'api ayant une structure définie)
+      let address2Check = checkFormInput(verifyCharacters.test(address), true, address2, address2Id, formErrorHTML + badValue + badValueChar);
 
       // Ville
-      if (
-        verifyNumbers.test(city) == true ||
-        verifyCharacters.test(city) == true ||
-        city == ""
-      ) {
-        returnMessage = cityId.insertAdjacentHTML(
-          "afterend",
-          formErrorHTML +
-          badValue +
-          badValueFigure +
-          badValueChar +
-          "</strong></div></div>"
-        );
-      } else {
-        console.log("Format ville validé");
-      }
+      let cityCheck = checkFormInput(verifyNumbers.test(city) | verifyCharacters.test(city), true, city, cityId, formErrorHTML + badValue + badValueFigure + badValueChar);
 
       // Code postal
-      if (
-        verifyNumbers.test(zipcode) == false ||
-        verifyLetters.test(zipcode) == true ||
-        zipcode == ""
-      ) {
-        returnMessage = zipcodeId.insertAdjacentHTML(
-          "afterend",
-          formErrorHTML +
-          badValue +
-          badValueLetter +
-          badValueChar +
-          "</strong></div></div>"
-        );
-      } else {
-        console.log("Format code postal validé");
-      }
+      let zipcodeCheck = checkFormInput(verifyCharacters.test(zipcode) | verifyLetters.test(zipcode), true, zipcode, zipcodeId, formErrorHTML + badValue + badValueLetter + badValueChar);
 
-      // Si aucun message d'erreur n'est retourné,
-      // alors le formulaire est validé et on peut enregistrer
-      // les informations client dans un nouvel objet
+      // Variable comptant le nombre d'erreurs
+      let errorCount = lnameCheck + fnameCheck + emailCheck + addressCheck + address2Check + cityCheck + zipcodeCheck;
 
-      if (returnMessage != "") {
-        shoppingForm.insertAdjacentHTML(
-          "afterend",
-          formErrorHTML +
-          "Erreur: Des erreurs sont présentes dans le formulaire, veuillez les corriger" +
-          "<br>" +
-          "</strong></div></div>"
-        );
+      if (errorCount != 0) {
+        shoppingForm.insertAdjacentHTML("afterend", formErrorHTML + "Erreur: Des erreurs sont présentes dans le formulaire, veuillez les corriger" + "<br>" + "</strong></div></div>");
         formBoolean = false; // Si des erreurs sont retournées alors on définit la variable comme fausse pour que le formulaire ne puisse pas être envoyé
       } else {
         // Construction de l'objet contenant les infos du client
@@ -488,7 +313,7 @@ async function displayShoppingCart() {
           firstName: fname,
           lastName: lname,
           email: email,
-          address: address + address2string, // L'adresse secondaire est ici ajoutée à la principale pour plus d'exactitude lors de la commande
+          address: address + ", " + address2, // L'adresse secondaire est ici ajoutée à la principale pour plus d'exactitude lors de la commande
           city: city + ", " + zipcode, // Le code postal est ici ajouté après la ville afin que la localisation soit plus précise
         };
         console.log("formulaire validé");
@@ -499,10 +324,13 @@ async function displayShoppingCart() {
     // Déclaration des variables de la commande
     // Variable permettant de récupérer les informations de contact de l'utilisateur
     let contact;
+
     // Bouton d'achat
     let formSubmit = document.getElementById("shopping-form");
     let orderButton = document.getElementById("submit");
     orderButton.textContent = "Commander " + totalQuantity + " articles"; // Affichage du nombre d'articles de la commande
+    
+    // Fonciton éxecutée lorsque le bouton acheté est cliqué
     formSubmit.addEventListener("submit", (event) => {
       event.preventDefault();
       verifyForm(contact); // Vérification du formulaire avant l'envoi
@@ -548,16 +376,7 @@ async function displayShoppingCart() {
         let parsedData = JSON.parse(orderData);
         console.log(formResponse.status);
         console.log("API reached. Code " + formResponse.status);
-        document.location.assign(
-          "./confirmation.html?id=" +
-          responseId.orderId +
-          "&total=" +
-          totalPrice +
-          "&firstName=" +
-          parsedData.contact.firstName +
-          "&lastName=" +
-          parsedData.contact.lastName
-        );
+        document.location.assign("./confirmation.html?id=" + responseId.orderId + "&total=" + totalPrice + "&firstName=" + parsedData.contact.firstName + "&lastName=" + parsedData.contact.lastName);
       } else {
         alert("Une erreur s'est produite, veuillez réessayer ultérieurement."); // Sinon on renvoie une alerte au navigateur
       }

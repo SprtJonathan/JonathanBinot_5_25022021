@@ -4,25 +4,6 @@ const apiUrl = "http://localhost:3000/api/" + soldProduct + "/"; // Lien vers l'
 //const apiUrl = "https://ab-p5-api.herokuapp.com/api/" + soldProduct + "/"; // Lien vers l'API du type de produit vendu 
 //(ce dernier URL était utilisé car le 08/04/2021 la BDD originale ne pouvait plus être jointe)
 
-// Déclaration des variables du panier
-const cartId = "userShoppingCart"; // Nom du panier qui sera ajouté au localStorage
-let shoppingCart = JSON.parse(localStorage.getItem(cartId)); // Tableau contenant les éléments ajoutés au panier
-
-function getItemsNumber() {
-  // Ajout de l'affichage du nombre d'éléments dans le panier
-  // Vérification que le localStorage soit initialisée pour éviter les erreurs
-  if (localStorage.getItem(cartId)) {
-    console.log(shoppingCart);
-  } else {
-    console.log("Le panier va être initalisé");
-    shoppingCart = [];
-    localStorage.setItem(cartId, JSON.stringify(shoppingCart));
-  }
-  let cartItemsNumber = shoppingCart.length; // Nombre d'articles dans le panier
-  let cartNumber = document.getElementById("shopping-cart-number"); // Nombre d'articles dans le panier
-  cartNumber.textContent = cartItemsNumber;
-}
-
 // ID de chaque produit
 let productId = "";
 
@@ -55,62 +36,34 @@ async function productDetailPage() {
 
   // Structure de la page de l'article
   // Container de l'article
-  let selectedProductContainer = document.createElement("section");
-  selectedProductContainer.setAttribute("class", "details--product-container");
+  let selectedProductContainer = createDomElement("section", ["class"], ["details--product-container"]);
 
   // Image de l'article
-  let selectedProductImage = document.createElement("img");
-  selectedProductImage.setAttribute("class", "details--product-image");
-  selectedProductImage.setAttribute("src", selectedProduct.imageUrl);
+  let selectedProductImage = createDomElement("img", ["class", "src"], ["details--product-image", selectedProduct.imageUrl]);
 
   // Légende de l'image
-  let selectedProductArticle = document.createElement("article");
-  selectedProductArticle.setAttribute(
-    "class",
-    "details--product-article col-sm-12"
-  );
+  let selectedProductArticle = createDomElement("article", ["class"], ["details--product-article col-sm-12"]);
 
   // Bloc regroupant le nom et la description de l'article
-  let selectedProductDetailsBlock = document.createElement("aside");
-  selectedProductDetailsBlock.setAttribute(
-    "class",
-    "card details--product-details-aside"
-  );
+  let selectedProductDetailsBlock = createDomElement("aside", ["class"], ["card details--product-details-aside"]);
 
   // Nom de l'article
-  let selectedProductName = document.createElement("h3");
-  selectedProductName.setAttribute("class", "details--product-name");
+  let selectedProductName = createDomElement("h3", ["class"], ["details--product-name"]);
 
   // Description de l'article
-  let selectedProductDescription = document.createElement("h5");
-  selectedProductDescription.setAttribute(
-    "class",
-    "details--product-description"
-  );
+  let selectedProductDescription = createDomElement("h5", ["class"], ["details--product-description"]);
 
   // Bloc regroupant les détails d'achat de l'article
-  let selectedProductBuyBlock = document.createElement("aside");
-  selectedProductBuyBlock.setAttribute(
-    "class",
-    "card details--product-buy-aside"
-  );
+  let selectedProductBuyBlock = createDomElement("aside", ["class"], ["card details--product-buy-aside"]);
 
   // Prix de l'article
-  let selectedProductPrice = document.createElement("h4");
-  selectedProductPrice.setAttribute("class", "details--product-price");
+  let selectedProductPrice = createDomElement("h4", ["class"], ["details--product-price"]);
 
   // Select Div block
-  let selectedProductSelectBlock = document.createElement("div");
-  selectedProductSelectBlock.setAttribute(
-    "class",
-    "details--product-selection-block"
-  );
+  let selectedProductSelectBlock = createDomElement("div", ["class"], ["details--product-selection-block"]);
 
   // Options de l'article
-  let selectedProductSelect = document.createElement("select");
-  selectedProductSelect.setAttribute("id", "product-options");
-  selectedProductSelect.setAttribute("class", "details--product-options");
-  selectedProductSelect.setAttribute("onChange", "selectionChange(this);");
+  let selectedProductSelect = createDomElement("select", ["id", "class", "onChange"], ["product-options", "details--product-options", "selectionChange(this);"]);
 
   // Fonction permettant de changer la valeur de la sélection
   selectionChange = function (select) {
@@ -141,16 +94,7 @@ async function productDetailPage() {
   }
 
   // Quantité de produits
-  let selectedProductQuantitySelect = document.createElement("select");
-  selectedProductQuantitySelect.setAttribute("id", "product-quantity");
-  selectedProductQuantitySelect.setAttribute(
-    "class",
-    "details--product-quantity"
-  );
-  selectedProductQuantitySelect.setAttribute(
-    "onChange",
-    "selectionQuantity(this);"
-  );
+  let selectedProductQuantitySelect = createDomElement("select", ["id", "class", "onChange",], ["product-quantity", "details--product-quantity", "selectionQuantity(this);"]);
 
   // Boucle for qui crée les différentes quantités sélectionnables
   for (let i = 1; i <= 10; i++) {
@@ -167,11 +111,7 @@ async function productDetailPage() {
   };
 
   // Lien pour acheter le produit
-  let selectedProductBuy = document.createElement("a");
-  selectedProductBuy.setAttribute("id", "add-to-cart-button");
-  selectedProductBuy.setAttribute("class", "btn btn-warning");
-  selectedProductBuy.setAttribute("href", "/cart.html");
-  selectedProductBuy.setAttribute("onclick", "addToCart()");
+  let selectedProductBuy = createDomElement("a", ["id", "class", "href", "onclick"], ["add-to-cart-button", "btn btn-warning", "/cart.html", "addToCart()"]);
 
   /* Configuration de la parenté de chaque élément: 
     Le container se retrouve sous la section contenant les articles, l'image et la légende dans le figure, et les caractéristiques dans le figcaption*/
@@ -189,8 +129,7 @@ async function productDetailPage() {
   selectedProductBuyBlock.appendChild(selectedProductBuy);
 
   let choiceText = document.getElementById("choice-name-section");
-  let productName = document.createElement("h2");
-  productName.setAttribute("id", "product-name");
+  let productName = createDomElement("h2", ["id"], ["product-name"]);
   productName.textContent = selectedProduct.name;
   choiceText.append(productName);
 
